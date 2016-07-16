@@ -286,12 +286,19 @@ inoremap <Leader>dt <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-"copy to clipboard 
+"copy to clipboard from visual mode with <C-c>
 vmap <C-c> "+y
+"copy to clipboard the line you're on from normal mode with <C-c> 
+nmap <C-c> "+yy
 "paste from clipboard making sure set paste is true, http://stackoverflow.com/questions/2555559/pasting-from-clipboard-and-automatically-toggling-set-paste
 "2016-05-06 I commented out cindent that I was not using anyway and now in vim_7.4 + gnome_3.18.3 it
 "works out of the box without any setting when there is NOFILETYPE
 "Solution is then to use paste mode <F2><S-Insert><F2> in any mode or <Esc> "+p in normal mode
+
+"remap the block visual mode to <C-b>
+nnoremap <c-b> <c-v>
+"map pasting the clipboard to <C-v>
+nmap <C-v> "+p
 
 "---------------------------------------------------------------
 " ORTHOGRAPHE

@@ -1,166 +1,3 @@
-}else{
-grepFields <- grep(tbl_, descriptifTables$Nom, ignore.case=TRUE, value=TRUE);
-return(descriptifTables[descriptifTables$Nom %in% grepFields,]);
-}
-}
-
-##################
-# BASE FUNCTIONS #
-##################
-
-getFunctionsInFile <- function(fileName){
-#USAGE: get all the functions defined in a .R file
-file_in <- file(fileName,"r")
-x <- readLines(file_in)
-ind <- grep("^.* <- function", x, value=TRUE)
-ind <- sapply(strsplit(gsub('\t','',ind),'\\{'), FUN=function(x){return(x[1])})
-close(file_in);
-return(ind);
-}
-
-write.big.csv = function(x, file, chunks=1e5, verbose=FALSE, sep=",", row.names=FALSE, 
- col.names=TRUE, quote=FALSE, ...){
-########################################################
-#USAGE: write csv file by chunks to avoir memory issues
-########################################################
-nbLigns = nrow(x);
-print(paste("write.big.csv will write",nbLigns,"ligns by chunks of",chunks,sep=" "));
-nb = ceiling(nbLigns/chunks);
-for(i in 1:nb){
-if(verbose){
-print(paste("writing chunk number", i, "of", nb, "...", sep=" "))
-}
-if(i>1){
-col.names=FALSE; append=TRUE
-}else{append=FALSE}
-write.table(x=x[(1+(i-1)*chunks):min(nbLigns,(i*chunks)),], file=file, sep=sep, row.names=row.names, 
-col.names=col.names, append=append, quote=quote, ...);
-}
-}
-
-packageLoaded <- function(name){
-##############################################################
-#USAGE: retuen if a package is currently loaded
-#TEST: packageLoaded("data.table"); packageLoaded("notAPkg")
-##############################################################
-loadedPkg <- grep(paste("^package:", name, "$", sep=""), search())
-return(length(loadedPkg) !=0)
-}
-
-
-split.by.one = function(Y,by.one){
-##############################################################
-#USAGE: perform a split on df or list of df by a column name
-#TEST: data(iris); split.by.one(iris,"Species")
-##############################################################
-if(class(Y) %in% c("data.frame","matrix")){
-return(split(x=Y, f=factor(Y[,by.one]), drop=TRUE));
-}else if(class(Y) == "list"){
-return(sapply(FUN=split.by.one, X=Y, simplify=TRUE, by.one=by.one));
-}else{
-stop(" in split.by.one : class(x) not in {list, matrix, data.frame}")
-}
-}
-
-split.by = function(Y,by){
-###################################################
-#USAGE: perform a split by multiple column names
-#TEST: data(iris);iris$type=c("a","b","c")
-# split.by(iris,c("Species","type"))
-###################################################
-if(class(Y) %notin% c("data.frame","matrix")){stop(" in split.by : class(Y) not in {matrix,data.frame}")} 
-out.first = split.by.one(Y, by[1]);
-if(length(by)==1){
-return(out.first);
-}else{
-by.rest = by[-1];
-return(Reduce(f=split.by.one,x=by.rest, init=out.first));
-}
-}
-
-sample.data.frame = function(n){
-return (data.frame(x=sample(letters,n,replace=T),y=sample(LETTERS,n,replace=T),z=floor(runif(n)*10)));
-}
-sample.data.table = function(n){return(as.data.table(sample.data.frame(n)))}
-
-
-#test if all elem are identical in a list (of anything)
-all.equal.in <- function(v) {all(sapply( as.list(v[-1]), FUN=function(z) {identical(z, v[1])}))}
-#quicker... test if all elem are identical (need to be able to call min/max)
-all.equal.in2 <- function(y) {isTRUE(all.equal(max(y),min(y)))}
-#quickest... for numeric
-all.equal.in3 <- function(x) {diff(range(x)) < .Machine$double.eps ^ 0.5}
-
-repeat.before = function(x) {
-#######################################################
-#USAGE: repeats the last non NA value. Keeps leading NA
-#TEST:x = c(NA,NA,'a',NA,NA,NA,NA,NA,NA,NA,NA,'b','c','d',NA,NA,NA,NA,NA,'e')
-#system.time({ yzoo = na.locf(x,na.rm=F)}) 
-#system.time({ yrep = repeat.before(x)})
-#######################################################
-ind = which(!is.na(x))      # get positions of nonmissing values
-if(is.na(x[1]))             # if it begins with a missing, add the 
-ind = c(1,ind)          # first position to the indices
-# repeat the values at these indices
-rep(x[ind], times = diff( c(ind, length(x) + 1) )) # diffing the indices + length yields how often they need to be replaced
-}
-
-logSession <- function(logName){
-#USAGE: This function will log everything on the console into a file (not comments though)
-require(TeachingDemos);
-if(sink.number()>=1)
-stop("This R session is already sank to a file use sink() if you want to create another connexion");
-if(missing(logName)){
-logName <- paste0(format(Sys.time(), "%Y%m%d_%H%M%S"),".Rlog")
-logName <- file.path(getwd(),logName);
-}
-txtStart(file=logName)
-cat(paste("A connection has been open to file",logName,"R output will be sink to it.\n"))
-timestamp(date(),prefix=paste("##------ [logName = ",logName,"] ",sep=""));
-}
-
-myformat.POSIXct <- function(x, digits=0) {
-#USAGE: This function takes a POSIXct format and output a character, making sure that the
-#character representation is accurate
-#see http://stackoverflow.com/questions/7726034/how-r-formats-posixct-with-fractional-seconds/7730759#7730759
-x2 <- round(unclass(x), digits)
-attributes(x2) <- attributes(x)
-x <- as.POSIXlt(x2)
-x$sec <- round(x$sec, digits) + 10^(-digits-1)
-format.POSIXlt(x, paste("%Y-%m-%d %H:%M:%OS",digits,sep=""))
-}
-
-forceTZ <- function(x,tz){
-#USAGE: This function will force the timezone attribute to be changed
-#without modifying the value
-return(as.POSIXct(as.numeric(x), origin=as.POSIXct("1970-01-01 00:00:00", tz='GMT'), tz=tz))
-}
-
-############################
-# DATA.TABLE PACKAGE UTILS #
-############################
-
-llorJoin <- function(A,B){
-##############################################################
-#USAGE: Do a Next Obs Carried Backward, waiting for data.table
-    #    to implement a new roll argument
-#TEST: TODO
-#
-#
-#######################################################
-    B <- copy(B);
-    keys <- key(A);
-    if( !identical(key(A), key(B)) | is.null(keys) ){
-       stop("llorJoin::ERROR; A and B should have the same non-empty keys");
-    }
-
-    lastKey <- tail(keys,1L);
-    myStr <- parse(text=paste(lastKey,":=-as.numeric(",lastKey,")"));
-    A <- A[,eval(myStr)]; setkeyv(A,keys);
-    B <- B[,eval(myStr)]; setkeyv(B,keys);
-
-    origin <- "1970-01-01 00:00.00 UTC";
-    A <- B[A,roll=T];
     myStr2 <- parse(text=paste(lastKey,":=as.POSIXct(-",lastKey,",origin=origin)",sep=""));
     A <- A[,eval(myStr2)]; setkeyv(A,keys);
     return(A);
@@ -998,3 +835,166 @@ ln -s .dotfiles/.gitconfig .gitconfig
 ll
 ln -s .dotfiles/.viminfo .viminfo
 ll
+cd .dotfiles/
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/statquant/dotfiles.git
+git push -u origin master
+cd ~/CodeProjects/R/squarr
+ll
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/statquant/squarr.git
+git push -u origin master 
+less ~/Documents/HowToSetupGithub.txt 
+ll
+sudo dnf update 
+cd ~/Build/
+ll
+cd citrix/
+ll
+./wfica
+./wfica ~/Dpw
+./wfica ~/Downloads/launch.ica 
+gvim
+cd ~
+cd .vim/bundle/
+ll
+cd fonts/
+ll
+cat install.
+cat install.sh 
+xset q
+ll /etc/X11/fontpath.d/
+./install.sh 
+gvim
+tree /home/statquant/.local/share/fonts
+sudo dnf install powerline
+sudo dnf install tmux-powerline
+vim
+exit
+cd ~/Build/
+ls
+gedit
+tmux
+vim 
+exit
+vim ~/.bashrc 
+vim ~/.tmux.conf 
+vim ~/.bashrc 
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+cd ~/.tmux
+ll
+vim ~/.tmux.conf 
+tmux source ~/.tmux.conf
+vim ~/.tmux.conf 
+tmux source ~/.tmux.conf
+vim ~/.tmux.conf 
+tmux source ~/.tmux.conf
+vim ~/.tmux.conf 
+tmux source ~/.tmux.conf
+vim ~/.tmux.conf 
+tmux source ~/.tmux.conf
+vim ~/.tmux.conf 
+exit
+#qwrwrbvqwer
+#qerbqwer
+#qerbqetjwrt
+#qethrqweth
+#qerhqe5h
+#qerbqwer
+#qerbqetjwrt
+#colin rhvwlkrvlkwehgliuwgerlui
+#qerbqetjwrt
+ #colin rhvwlkrvlkwehgliuwgerlui
+exit
+vim
+set-window-option -g mode-keys vi
+bind k select-pane -U
+bind -t vi-coy v begin-selection
+#bind -t vi-coy v begin-selection
+bind -t vi-coy v begin-selection
+source "/usr/share/tmux/owerline.conf"
+# htts://fedoramagazine.org/add-ower-terminal-owerline/
+tmux ls
+rg
+er
+qe
+w
+#erhqerhqearh
+#etrnqeatrnqe
+#qetqnetnnqetn
+#qetnqetnwrst
+#qethqetnqet
+#qtnqrtmnwrsynwrs
+#qetnwrytmwrymnwaetd
+#tnwrtmwrsyngwrat
+#rtnwrymwrsyngwr
+#qethqetnqet
+#qtnqrtmnwrsynwrs
+#qetnwrytmwrymnwaetd
+#tnwrtmwrsyngwrat
+#rtnwrymwrsyngwr
+#erhqerhqea
+#etrnqeatrn
+#qetqnetnnq
+#qetnqetnwr
+#qethqetnqe
+which parcellite
+su -s dnf install parcellite
+dnf install parcellite
+sudo -s dnf install parcellite
+parcellite 
+vim 
+mv ~/test/vimAndTmuxPbs.txt ~/Documents/HowToCopyInVimTmux.txt
+exit
+reset
+#' test if mosek is working correctly (moslty license) by running lo1
+#' @examples
+#' examples examples examples 
+#' test if mosek is working correctly (moslty license) by running lo1
+#' examples examples examples
+xclip
+xsel
+Install package 'xsel' to provide command 'xsel'? [N/y] N
+xclip
+locate xclip
+which xclipboard
+sudo -s dnf install xclip
+which xclipboard
+which xclip
+man xclip
+ man xclip
+ which xclipboard
+clear
+#qerhqethq
+#qerhqeth
+#qethqethqe
+clear
+#qerhqethq
+#qerhqethqrhqer
+#qerhqethqrhqerqerhqer
+hqrhqerqerhqer
+ #qerhqethqrhqerqerhqer
+#bind -t vi-copy v begin-selection
+sudo -s dnf remove parcellite
+exit
+gedit
+tmux ls
+vim --version
+exit
+tmux
+reset
+tmux source-file ~/.tmux.conf
+tmux
+exit
+vim
+exit
+vim ~/.tmux.conf 
+tmux fill session
+tmux kill session
+tmux kill-session
+tmux
+exit

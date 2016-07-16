@@ -52,3 +52,12 @@ PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-linux:$HOME/Build/vim/bin:$HOME/Bu
 
 #2015-05-02 For citrix client on linux
 export ICAROOT=/home/statquant/Build/citrix
+
+#2016-07-11 powerline for shell
+command -v powerline-daemon &>/dev/null
+if [ $? -eq 0 ]; then
+	powerline-daemon -q
+	POWERLINE_BASH_CONTINUATION=1
+	POWERLINE_BASH_SELECT=1
+	. /usr/share/powerline/bash/powerline.sh
+fi
