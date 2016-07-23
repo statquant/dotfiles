@@ -61,3 +61,10 @@ if [ $? -eq 0 ]; then
 	POWERLINE_BASH_SELECT=1
 	. /usr/share/powerline/bash/powerline.sh
 fi
+
+#2016-07-23 building terminator
+export INTLTOOL_BIN=$HOME/Build/intltool/bin
+PATH=$PATH:$INTLTOOL_BIN
+export PYTHONPATH=$PYTHONPATH:/home/statquant/Build/terminator/lib/python2.7/site-packages/
+export TERMINATOR_BIN=$HOME/Build/terminator/bin
+PATH=$PATH:$TERMINATOR_BIN

@@ -1,305 +1,3 @@
-    myStr2 <- parse(text=paste(lastKey,":=as.POSIXct(-",lastKey,",origin=origin)",sep=""));
-    A <- A[,eval(myStr2)]; setkeyv(A,keys);
-    return(A);
-}
-
-lj <- function(X, Y, ...){
-#USAGE: Perform a left-join but keeping keys of X
-keyYInX <- intersect(key(Y),colnames(X))
-if(length(keyYInX)>0)
-setnames(Y, keyYInX, paste0(keyYInX,'_Y_FAKE_SUFFIXE'))
-LJ <- Y[X,...];
-nbKey <- min(length(key(LJ)), length(key(X)))
-setnames(LJ, key(LJ)[1:nbKey], key(X)[1:nbKey]);
-if(length(keyYInX)>0)
-setnames(Y, paste0(keyYInX,'_Y_FAKE_SUFFIXE'), keyYInX)
-return(LJ);
-}
-
-dt.unique <- function(DT, bykey=key(DT)){
-##########################################################
-#USAGE: return data.table without dups based on keys 
-#defined by bykey 
-#WARNING: bykey should be a begining of key(DT) like if 
-#key(DT)={"x","y","t"} keyby should be key(DT)[1:i]
-#TEST: TODO
-##########################################################
-keys <- key(DT);
-if(any(bykey %notin% keys[1:length(bykey)]))
-stop("ERROR in dt.unique keyby should be key(DT)[1:i]")
-setattr(DT,"sorted",bykey);
-uDT <- unique(DT);
-#we set back the sorted attributes of DT (it is done by reference)
-setattr(DT,"sorted",keys);
-return(uDT);
-}
-
-setIdx <- function(DT){ 
-keys <- key(DT);
-DT[,IDX:=.I]; 
-if('IDX' %in% keys){
-if('IDX' != keys[1L]){
-warning('Dans setIdx IDX est d�j� une cl� de DT mais pas la premi�re !')
-}else{ #2013-08-27: data.table is loosing the keys when reassigning (it makes sense) 
-setattr(DT,'sorted',keys);
-}
-}else{ #we add IDX to the keys
-setattr(DT,'sorted',c('IDX',keys));
-}
-}
-
-check_args <- function(arg, any_of, none_of, all_of){
-#args values can be any values within any_of
-if( !missing(any_of) && any(arg %notin% any_of) ){
-argName <- deparse(substitute(arg));
-allowedValues <- paste0('{',paste(any_of,collapse=','),'}')
-argFault <- arg[arg %notin% any_of][1L]
-errorMsg <- paste0(argName,' holds ',argFault,' which is not within accepted values: ',
-   allowedValues);
-stop(errorMsg)
-}
-#args values should contain none of none_of values
-if( !missing(none_of) && any(arg %in% none_of) ){
-argName <- deparse(substitute(arg));
-forbidenValues <- paste0('{',paste(none_of,collapse=','),'}')
-argFault <- arg[arg %in% none_of][1L]
-errorMsg <- paste0(argName,' holds ',argFault,' which is within forbidden values: ',
-   forbidenValues);
-stop(errorMsg)
-}
-#args values should contain all of all_of values
-if( !missing(all_of) && any(all_of %notin% arg) ){
-argName <- deparse(substitute(arg));
-neededValues <- paste0('{',paste(all_of,collapse=','),'}')
-argFault <- all_of[all_of %notin% arg][1L]
-errorMsg <- paste0(argName,' do not hold ',argFault,' which is one of the mandatory values: ',
-   neededValues);
-stop(errorMsg)
-}
-}
-
-forcekey <- function(DT,...){
-keys <- data.table:::getdots();
-forcekeyv(DT,keys)
-}
-
-forcekeyv <- function(DT, keys){
-data.table:::setattr(DT,'sorted',keys)
-}
-
-addkey <- function(DT,..., psn='front'){ 
-keys <- data.table:::getdots();
-forcekeyv(DT,keys,psn)
-}
-
-addkeyv <- function(DT, keys, psn='front'){ 
-check_args(psn, any_of=c('front','queue'))
-if(psn=='front'){ 
-setattr(DT,'sorted',c(keys,key(DT)));
-}else if(psn=='queue'){
-setattr(DT,'sorted',c(key(DT),keys));
-}
-}
-
-summ <- function(DT, field){
-s <- DT[,list(.N),by=field]
-setkeyv(s, field)
-return(s)
-}
-#########################
-# RORACLE PACKAGE UTILS #
-#########################
-
-openConnexion <- function(){
-require(DBI); require(ROracle);
-Login <- "cumansky";sntj9z";
-drv <- dbDriver("Oracle");
-con <<- dbConnect(drv, username = Login, password = Pwd, dbname = "SESAM", prefetch=TRUE, bulk_read=1e6);
-rs <- dbSendQuery(con, "ALTER SESSION SET CURRENT_SCHEMA=SMF"); 
-}
-
-oracleToDate <- function(dateTime, oracleFormat="YYYY-MM-DD HH24:MI:SS"){ 
-dateQuery <- paste("to_date('",dateTime,"','",oracleFormat,"')",sep="") 
-return(dateQuery)
-}
-
-oracleQt <- function(stuff){return(paste0("'",stuff,"'"))}
-
-oracleInQt <- function(stuff){
-qte <- ifelse(is.numeric(stuff),'',"'");
-return( paste0( '(', paste(paste0(qte,stuff,qte),collapse=",") ,')') )
-}
-
-getIdvm <- function(isins){
-if(!exists("con")) openConnexion();
-idvm.query <- paste0("SELECT DISTINCT V6XIDVM, V6XLBVM, V6XCDTD FROM VHVX WHERE V6XCDTD IN",oracleInQt(isins));
-idvm <- dbGetQuery(con, idvm.query)
-return(idvm)
-}
-
-#########################
-#  GRAPHICAL UTILITIES  #
-#########################
-plotGrid <- function(...){
-yaxp <- par()$yaxp;
-H <- seq(from=yaxp[1], to=yaxp[2], length=yaxp[3]+1L)
-xaxp <- par()$xaxp;
-V <- seq(from=xaxp[1], to=xaxp[2], length=xaxp[3]+1L)
-.grid(H,V,...)
-}
-
-.grid <- function(H,V, ...){
-if(!missing(H)){
-for(i in seq_along(H)){
-abline(h=H[i], ...)
-}
-}
-if(!missing(V)){
-for(j in seq_along(V)){
-abline(v=V[j], ...)
-}
-}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-reset
-
-
-echo $TERM
-cat ~/.bashrc 
-grep "^#" ~/.bashrc 
-grep -v "#" ~/.bashrc 
-grep -v "#| " ~/.bashrc 
-man grep 
-which grep
-grep -v # ~/.bashrc 
-grep -v '#' ~/.bashrc 
-grep -v "#" ~/.bashrc 
-man grep
-grep -v "#|^$" ~/.bashrc 
-grep -v "#" -e "|^$" ~/.bashrc 
-grep -v "|^$" ~/.bashrc 
-grep -v -e "|^$" ~/.bashrc 
-grep -e -v '^[[:space:]]*$' foo.txt
-grep -e -v '^[[:space:]]*$' ~/.bashrc
-grep -e -v "^[[:space:]]*$" ~/.bashrc
-grep -v "^[[:space:]]*$" ~/.bashrc
-grep -v "^$" ~/.bashrc
-grep -v "^$|#" ~/.bashrc
-grep -v "^[$|#]" ~/.bashrc
-grep "^$" ~/.bashrc
-grep "^$|^#" ~/.bashrc
-grep -v '^#' | grep -v '^$' ~/.bashrc
-grep -v '^#' ~/.bashrc | grep -v '^$'
-grep -V
-vim
-grep -v "^#\|^$" ~/.bashrc 
-vim
-tmux
-vim
-tmux
-sudo -s
-cd Downloads/
-cd films/
-ll
-ffmpeg -i "Star Wars Episode VII - The Force Awakens.mkv" -c copy -metadata:s:a:0 language=eng "Star Wars Episode VII - The Force Awakens.mp4"
-cd /media
-ll
-ssh 192:168.1.47
-ssh admin@192:168.1.47
-ll
-cd
-ll
-mount -t nfs euclide:/video /mnt
-sudo -s mount -t nfs euclide:/video /mnt
-sudo -s mount -t nfs 192.148.1.47:/video /mnt
-sudo -s mount -t nfs 192.168.1.47:/video /mnt
-sudo -s mount -t nfs 192.168.1.47 /mnt
-sudo -s mount -t nfs 192.168.1.47:/backup /mnt
-sudo -s mount -t nfs 192.168.1.47:/ /mnt
-sudo -s mount -t nfs 192.168.1.47:/video /mnt
-sudo -s mount -t nfs 192.168.1.47::video /mnt
-sudo -s mount -t nfs 192.168.1.47/video /mnt
-sudo -s mount -t nfs 192.168.1.47:video /mnt
-cd /media/
-ll
-ls
-ls -lrtha
-cd /mnt
-ll
-cd sysimage/
-ll
-cd home/
-ll
-cd
-ll
-cd Euclide
- sudo mount -t cifs //192.168.1.47/video /media/mdrive -o user=statquant,pass=11Decembre82
- sudo mount -t cifs //192.168.1.47/video /media/ -o user=statquant,pass=11Decembre82
-cd /media
-ll
-cd movie
-ll
-cd /media
-ll
-cd movie
-sudo dnf update
-ll
-mv ../Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv .
-ll | grep Star
-mv ../Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv .
-cp ../Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv .
-rm Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mp4 
-mv ../Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv .
-mv ../Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv ./
-mv ../"Star Wars Episode VII - The Force Awakens.mkv" .
-mv "../Star Wars Episode VII - The Force Awakens.mkv" .
-cd ..
-ll
-mv Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv ./movie/
-cd movie/
-ll
-cd Documents/
-ll
-vim HowToMountSharedDirOnNAS.txt
-mkvinfo
-ll
-cd Scripts/
-ll
-git clone git://github.com/JakeWharton/mkvdts2ac3.git
-ll
-cd mkvdts2ac3/
-ll
-vim mkvdts2ac3.sh 
-./mkvdts2ac3.sh --help
-sudo dnf install mkvtoolnix
-cd ~Download
-cd ~/Downloads/
-ll
-cd films/
-ll
-rm Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mp4 
-ll
-~/Scripts/mkvdts2ac3/mkvdts2ac3.sh -n Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv 
-mkvinfo
- sudo rpm -Uhv https://mkvtoolnix.download/fedora/bunkus-org-repo-2-3.noarch.rpm 
- sudo dnf install mkvtoolnix 
-sudo dnf install mkvtoolnix-gui-9.1.0-1.fc23.x86_64 
-mkvinfo
 ~/Scripts/mkvdts2ac3/mkvdts2ac3.sh -n Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv 
 cd /tmp
 ll
@@ -998,3 +696,305 @@ tmux kill session
 tmux kill-session
 tmux
 exit
+cd ~/
+cd .dotfiles/
+ll
+cat ~/Documents/HowToSetupGithub.txt 
+git status 
+git commit -a
+git push -u origin master
+vim ~/Documents/HowToBuildVim.txt 
+ll
+cd ..
+ll
+ln -s .dotfiles/.viminfo .
+rm .viminfo 
+ln -s .dotfiles/.viminfo .
+ll
+ll .subversion/
+ll .config/
+ll
+cd ~/Documents/
+ll
+ll dotfiles/
+rm -r dotfiles/
+mkdir HowTo
+mv HowTo*txt HowTo/
+ll
+cd HowTo/
+cat HowToSetupGithub.txt 
+touch README.md
+git init
+git add README.md
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/statquant/HowTo.git
+git push -u origin master
+cd ~/CodeProjects/
+ll
+cd C++/
+mv Manifold/ auction
+ll
+cd auction/
+echo "# auction" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/statquant/auction.git
+git push -u origin master
+cd ~/CodeProjects/
+cd C++/auction/
+ll
+git add .
+git commit -m "meat"
+git push -u origin master
+sudo dnf update
+restart
+reboot
+#some stuff 3
+#some stuff
+#some stuff 2
+#some stuff 3
+sudo -s dnf remove terminator
+tmux 
+cd Sources/
+ll
+tar xvf terminator-0.97.tar.gz 
+ll
+cd ll
+cd terminator-0.97/
+ll
+./terminator
+less README 
+./remotinator 
+less INSTALL 
+./setup.py install --record=install-files.txt
+ll
+less INSTALL 
+./setup.py install --help
+#./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+ll /home/statquant/Build/terminator
+ll /home/statquant/Build/
+mkdir  /home/statquant/Build/terminator
+#./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+ll
+ll data/terminator.desktop.in 
+ln -s data/terminator.desktop.in data/terminator.desktop
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+cp data/terminator.desktop.in data/terminator.desktop
+unlink data/terminator.desktop
+cp data/terminator.desktop.in data/terminator.desktop
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+cd ~/Build/
+ll
+cd terminator/bi
+ll
+cd bin/
+ll
+./terminator 
+cd ..
+ll share/
+ll lib/
+ll lib/python2.7/
+ll lib/python2.7/site-packages/
+ll
+./bin/terminator 
+./bin/remotinator 
+cd ../../Sources/terminator-0.97/
+./setup.py install --help
+./setup.py build/
+./setup.py build
+ll
+ll install-files.txt 
+less install-files.txt 
+ll terminatorlib/
+cd ..
+tar xvf terminator-0.97.tar.gz 
+cd terminator-0.97/
+ll
+./setup.py --help
+./setup.py --help-commands
+ll
+./setup.py build
+ll data/
+rm -r ~/Build/terminator/
+mkdir ~/Build/terminator/
+./setup.py --help
+less INSTALL 
+ll data/
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+ll
+ll ~/Build/terminator/lib/
+ll ~/Build/terminator/lib/python2.7/site-packages/terminatorlib/
+ll ~/Build/terminator/lib/python2.7/site-packages/terminatorlib/plugins/
+ll
+cd ..
+rm terminator-0.97
+rm -r terminator-0.97
+
+cd terminator-0.97/
+touch terminatorlib/plugins/__init__.py
+ll terminatorlib/plugins
+chmod 777 terminatorlib/plugins/__init__.py 
+ll terminatorlib/plugins
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator 
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+ll data/
+cd ..
+rm -r ~/Sources/terminator-0.97
+tar xvf terminator-0.97.tar.gz
+terminator-0.97
+cd terminator-0.97
+touch terminatorlib/plugins/__init__.py
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+ll data/
+ll
+ll data/
+cp data/terminator.desktop.in data/terminator.desktop
+ll data/
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+~
+~/Build/terminator/bin/terminator 
+cd ..
+ll
+tar xvf intltool-0.51.0.tar.gz 
+ll
+cd intltool-0.51.0/
+ll
+less README 
+less install-sh 
+./install-sh --help
+ll
+mkdir -p ~/Build/intltool
+./install-sh -t /home/statquant/Build/intltool/
+./configure --prefix=/home/statquant/Build/intltool/
+make && make install
+ll ~/Build/intltool/bin/
+vim ~/.bashrc 
+source ~/.bash_profile 
+v
+vim ~/.bashrc 
+source ~/.bash_profile 
+reset
+vim ~/.bashrc 
+vim
+cd
+pwd
+intltoolize --version
+cd ~/Sources
+rm -r ~/Sources/terminator-0.97
+tar xvf terminator-0.97.tar.gz
+cd terminator-0.97
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+cd ..
+rm -r ~/Sources/terminator-0.97
+tar xvf terminator-0.97.tar.gz
+cd terminator-0.97
+touch terminatorlib/plugins/__init__.py
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+~/Build/terminator/bin/terminator  
+~/Build/terminator/bin/terminator  -d
+~/Build/terminator/bin/terminator -d
+ll ~/Build/terminator/bin/ 
+ll ~/Build/terminator/
+tree -L 1 ~/Build/terminator/
+tree -L 2 ~/Build/terminator/
+echo $PYTHONPATH
+export PYTHONPATH=$PYTHONPATH:/home/statquant/Build/terminator/lib/python2.7/site-packages/
+echo $PYTHONPATH
+echo $PATH
+~/Build/terminator/bin/terminator
+vim ~/.bashrc 
+reset
+terminator
+vim ~/.bashrc 
+tail ~/.bashrc 
+ll $HOME/Build/terminator/bin
+cd
+terminator
+echo $PATH
+source ~/.bash_profile 
+echo $PATH
+terminator
+cd Sources/
+ll
+tar xvf terminator-0.98.tar.gz
+cd terminator-0.98/
+ll
+ll terminatorlib/plugins/
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+cd ~
+source ~/.bash_profile 
+ls
+terminator
+cd Sources/
+ll
+     bzr branch lp:terminator 
+ll
+ll terminator
+./terminator
+cd terminator
+./terminator
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+source ~/.bash_profile 
+cd
+terminator
+cd Sources/
+ll
+rm terminator
+rm -r terminator
+rm ePUBeeePUBDRMRemoval.exe 
+     bzr branch lp:terminator/gtk3 
+ll
+cd gtk3/
+ll
+./terminator
+./terminator.wrapper 
+cd ..
+rm -r gtk3/
+cd
+terminator
+cd Sources/terminator-0.98/
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+cd
+terminator
+cd Sources/terminator-0.98/
+ll
+ll terminatorlib/
+vim terminatorlib/plugin.py 
+cd ..
+ll
+rm -r ~/Sources/terminator-0.98
+tar xvf terminator-0.98.tar.gz
+cd terminator-0.98
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+ll
+vim terminatorlib/plugin.py 
+rm -r ~/Build/terminator; mkdir -p ~/Build/terminator
+./setup.py install --prefix=/home/statquant/Build/terminator --record=install-files.txt
+cd 
+source ~/.bash_profile 
+fd
+q
+cd ~/Documents/
+vim HowTo/HowToBuildTerminator.txt
+cd HowTo/
+ll
+git push
+git st
+git status
+git add HowToBuildTerminator.txt
+git push
+git status
+git commit -m "new file" HowToBuildTerminator.txt
+git status
+git push
+cd
+terminator
+terminator &
