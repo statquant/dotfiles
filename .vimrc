@@ -42,6 +42,8 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
+" Simulate a split shell in vim using gnu screen or tmux 
+Plugin 'ervandew/screen'
 
 call vundle#end()
 

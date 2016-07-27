@@ -210,16 +210,17 @@ set foldmarker={,}
 
 " 2016-05-05 from http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
 " working in vim_7.4+gnome_3.18.3 (+tmux_2.1 or not)
-if has("autocmd")
-	au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
-	au InsertEnter,InsertChange *
-				\ if v:insertmode == 'i' | 
-				\   silent execute '!echo -ne "\e[6 q"' | redraw! |
-				\ elseif v:insertmode == 'r' |
-				\   silent execute '!echo -ne "\e[4 q"' | redraw! |
-				\ endif
-	au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
-endif
+" 2016-07-27 messing up things with tmux
+"if has("autocmd")
+"	au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+"	au InsertEnter,InsertChange *
+"				\ if v:insertmode == 'i' | 
+"				\   silent execute '!echo -ne "\e[6 q"' | redraw! |
+"				\ elseif v:insertmode == 'r' |
+"				\   silent execute '!echo -ne "\e[4 q"' | redraw! |
+"				\ endif
+"	au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+"endif
 
 "----------------------------------------------------------------------
 " MARKING LOGIC

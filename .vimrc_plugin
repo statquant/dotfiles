@@ -155,11 +155,11 @@ let NERDTreeIgnore=[]
 "======================
 "This sets the name of the terminal multiplexer you want to use. Support
 "values include 'GnuScreen' or 'Tmux'.
-"let g:ScreenImpl='Tmux'
+let g:ScreenImpl='Tmux'
 
 "There are also 2 additional variables that allow you to specify any
 "options you would like to be passed to your terminal muliplexer of choice:
-"let g:ScreenShellTmuxInitArgs = '-2'
+let g:ScreenShellTmuxInitArgs = '-2'
 
 "Shell height
 "g:ScreenShellHeight (default value: 15)
@@ -172,8 +172,8 @@ let NERDTreeIgnore=[]
 "External Shell
 "When non-zero and not already in a screen session, an external shell will be
 "spawned instead of using a split region for the shell. Note: when using gvim,
-"an external shell is always used.
-"g:ScreenShellExternal (default value: 0)
+"an external shell is always used. (default value 0)
+let g:ScreenShellExternal=1
 
 "Initial focus
 "When set to 'shell' the newly created shell region will be focused when first
@@ -200,25 +200,35 @@ let NERDTreeIgnore=[]
 "with the filetype's associated interpreter. Here is an example which can be
 "put in a python ftplugin: >
 
-"function! s:ScreenShellListener()
-        "if g:ScreenShellActive
-                "if g:ScreenShellCmd == 'python'
-                        "nmap <buffer> <C-c><C-c> :ScreenSend<cr>
-                "else
-                        "nmap <buffer> <C-c><C-c> <Nop>
-                "endif
-        "else
-                "nmap <buffer> <C-c><C-c> :ScreenShell python<cr>
-        "endif
-"endfunction
+" Special function Invoke to send multiple lines in kdb
+:command! -range Invoke echomsg join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
 
-"call s:ScreenShellListener()
-"augroup ScreenShellEnter
-        "autocmd User *.py call <SID>ScreenShellListener()
-"augroup END
-"augroup ScreenShellExit
-        "autocmd User *.py call <SID>ScreenShellListener()
-"augroup END
+fun! CatSelection() range
+	let msg = join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
+	:call g:ScreenShellSend(msg)
+endfun
+
+function! s:ScreenShellListener()
+        if g:ScreenShellActive
+                if g:ScreenShellCmd == 'q'
+                        nmap <buffer> <space> :call SendLine()<cr>
+						vnoremap <buffer> <LocalLeader><space> :call CatSelection()<cr>
+						nmap <buffer> <LocalLeader>rq :ScreenQuit<cr>
+                else
+                        nmap <buffer> <C-c><space> <Nop>
+                endif
+        else
+                nmap <buffer> <LocalLeader>rf :ScreenShell q<cr>
+        endif
+endfunction
+
+call s:ScreenShellListener()
+augroup ScreenShellEnter
+        autocmd User *.q call <SID>ScreenShellListener()
+augroup END
+augroup ScreenShellExit
+        autocmd User *.q call <SID>ScreenShellListener()
+augroup END
 
 "======================
 "======= supertab =======

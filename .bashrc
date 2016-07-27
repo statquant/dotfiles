@@ -68,3 +68,7 @@ PATH=$PATH:$INTLTOOL_BIN
 export PYTHONPATH=$PYTHONPATH:/home/statquant/Build/terminator/lib/python2.7/site-packages/
 export TERMINATOR_BIN=$HOME/Build/terminator/bin
 PATH=$PATH:$TERMINATOR_BIN
+
+#2016-07-27 adding q
+export QHOME=~/Build/q/
+export PATH=$PATH:$QHOME/l32

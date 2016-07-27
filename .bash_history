@@ -1,155 +1,3 @@
-~/Scripts/mkvdts2ac3/mkvdts2ac3.sh -n Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv 
-cd /tmp
-ll
-rm -rf /tmp/*
-duso dnf remove docky
-sudo dnf remove docky
-cd Downloads/films
-ll
-mkdir convert
-ll
-~/Scripts/mkvdts2ac3/mkvdts2ac3.sh -n --new -w ./convert/ Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv 
-cd /media/
-ll
-cd ~/Documents/
-ll
-vim HowToCOnvertDTSToAAC.txt
-ffmpeg --help
-# ffmpeg -i in.mkv -vcodec copy -acodec ac3 -ac 6 out.mkv
-cat ~/Documents/HowToConvertMp4Clips.txt 
-# ffmpeg -i in.mkv -vcodec copy -acodec ac3 -ac 6 out.mkv
-cd ~/Downloads/films/
-ll
-ffmpeg -i Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens\ -\ DTS.mkv -c:v libx264 -c:a libfaac Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mp4
-ll
-ffmpeg -i Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens\ -\ DTS.mkv -c copy -metadata:s:a:0 language=eng -c:a libfaac "Star Wars Episode VII - The Force Awakens.mp4"
-$ cat ~/Documents/HowToConvertMp4Clips.txt 
-cat ~/Documents/HowToConvertMp4Clips.txt 
-for f in *.mp4; do  ffmpeg -i "${f%}" -f mp3 -ab 192000 -vn "${f%.*}".mp3;done
-#for f in *.mp4; do  ffmpeg -i "${f%}" -f mp3 -ab 192000 -vn "${f%.*}".mp3;done
-#for f in *.mkv; do  ffmpeg -i "${f%}" -f mp3 -ab 192000 -vn "${f%.*}".mp3;done
-#ffmpeg -i Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens\ -\ DTS.mkv -c copy -metadata:s:a:0 language=eng -c:a libfaac "Star Wars Episode VII - The Force Awakens.mp4"
-#for f in *.mkv; do  ffmpeg -i "${f%}" -c copy "${f%.*}".mp4;done
-#for f in *.mkv; do echo "${f%}";done
-for f in *.mkv; do echo "${f%}";done
-cd /media/movie/
-for f in *.mkv; do echo "${f%}";done
-for f in *.mkv; do  ffmpeg -i "${f%}" -c copy "${f%.*}".mp4;done
-cd /media/movie/
-ll
-cd /media/movie/
-cat ~/Documents/HowToConvertMp4Clips.txt 
-#for f in *.mp4; do  ffmpeg -i "${f%}" -f mp3 -ab 192000 -vn "${f%.*}".mp3;done
-for f in *.mkv; do  echo"${f%.*}";done
-for f in *.mkv; do echo "${f%.*}";done
-for f in *.mkv; do echo "${f%.*}"; echo "{f%}"; done
-for f in *.mkv; do echo "${f%.*}"; echo "${f%}"; done
-for f in *.mkv; do echo "Converting the following file: ${f%.*}"; echo "${f%}"; done
-#for f in *.mkv; do echo "Converting the following file: ${f%.*}"; ffmeg -i "${f%}" -c copy "${%f}".mp4; done
-for f in *.mkv; do echo "Converting the following file: ${f%.*}"; do echo "ffmeg -i ${f%} -c copy ${%f}.mp4"; done
-for f in *.mkv; do echo "Converting the following file: ${f%.*}"; echo "ffmeg -i ${f%} -c copy ${%f}.mp4"; done
-for f in *.mkv; do echo "Converting the following file: ${f%.*}"; echo "ffmeg -i ${f%} -c copy ${f%}.mp4"; done
-for f in *.mkv; do echo "Converting the following file: ${f%.*}"; echo "ffmeg -i ${f%} -c copy ${f%.*}.mp4"; done
-cd
-cat ~/Documents/HowToMountSharedDirOnNAS.txt 
-sudo mount -t cifs //192.168.1.47/video /media/ -o user=xxx,pass=xxx
-sudo mount -t cifs //192.168.1.47/video /media/ -o user=statquant,pass=11Decembre82
-cd /media/
-ll
-cd movie/
-ll
-rm Star\ Wars\ Episode\ VII\ -\ The\ Force\ Awakens.mkv 
-ll
-mv The.Intern.2015.720p.BRRip.x264.AAC-ETRG.mp4 The\ intern.mp4
-ll
-mv Les\ Tontons\ Flingueurs\ \[1963\]\ DvDrip\ FRA.avi Les\ Tontons\ Flingueurs.avi
-ll
-mv The\ Hobbit\:\ The\ Desolation\ of\ Smaug.mp4 The\ Hobbit\ -\ The\ Desolation\ of\ Smaug.mp4 
-mv The\ Hobbit\:\ The\ Desolation\ of\ Smaug.mp4 The\ Hobbit\ \-\ The\ Desolation\ of\ Smaug.mp4 
-ll
-ll | grep *.mkv
-ll *.mkv
-cat ~/Documents/HowToConvertMp4Clips.txt 
-ll
-ps aux 
-ps aux | grep  ff*
-ps aux | grep  ff*meg
-ll
-rm Cyrano\ de\ Bergerac.mp4 
-cat ~/Documents/HowToConvertMp4Clips.txt 
-#for f in *.mp4; do  ffmpeg -i "${f%}" -f mp3 -ab 192000 -vn "${f%.*}".mp3;done
-#for f in *.mkv; do  ffmpeg -i "${f%}" -c copy "${f%.*}".mp4;done
-for f in *.mkv; do echo "${f%}";done
-ffmeg -i Cyrano\ de\ Bergerac.mkv -c copy Cyrano\ de\ Bergerac.mp4
-ffmpeg -i Cyrano\ de\ Bergerac.mkv -c copy Cyrano\ de\ Bergerac.mp4
-htop
-htop --sort-key 1
-htop --sort-key 12
-kill -9 firefox
-ps  aux Z frep firefox
-ps  aux | frep firefox
-ps  aux | grep firefox
-kill -9 5421
-kill -9 5539
-ps  aux | grep firefox
-R
-sudo dnf install medl
-sudo dnf install meld
-cd ~/CodeProjects/R/msCentralePortfolio/Report/
-ll
-vimdiff prez/prez.tex prez2/prez2.tex 
-vimdiff report/report.tex reportbis/reportbis.tex
-which nautilus
-nautilus --version
-which nemo
-which caja
-sudo dnf install python-nautilus
-sudo dnf install "python-nautilus"
-cd ~/Sources/
-ll
-cd nautilus-pyextensions-3.4.1/
-ll
-./nautilus-pyextensions 
-dnf install gobject-introspection
-sudo dnf install gobject-introspection
-sudo dnf install gir1.2-gconf-2.0
-./nautilus-pyextensions 
-ll
-cd ~/Sources/
-ls
-cd nautilus-pyextensions-3.4.1/
-ll
-./nautilus-pyextensions 
-sudo dnf install notify-osd
-xdg-user-dir TEMPLATES
-cd /home/Templates
-cd /home/statquant/Templates
-touch New\ File
-cd ~/Documents/
-vim HowToAllowNewFileCreation.txt
-cd ~/.local/share/nautilus/scripts/
-ll
-chmod 777 Test\ script 
-ll
-nautilus --help
-ll
-sudo -s
-nautilus -q
-chmod statquant Test\ script 
-chown statquant Test\ script 
-sudo -s 
-ll
-nautilus -q
-nautilus --version
-cd ~/Documents/
-cd ~/Downloads/
-ll
-cd MISC_INTERNET/
-ll
-pdftk Umansky\ C\,\ Payslip\ 2016.pdf burst
-sudo dnf install pdftk
-pdftk
-pdfseparate Umansky\ C\,\ Payslip\ 2016.pdf 
 pdfseparate Umansky\ C\,\ Payslip\ 2016.pdf paysplip
 pdfseparate Umansky\ C\,\ Payslip\ 2016.pdf paysplip*pdf
 pdfseparate paysplips.pdf paysplip*pdf
@@ -998,3 +846,155 @@ git push
 cd
 terminator
 terminator &
+vim 
+# address vim mode switching delay (http://superuser.com/a/252717/65504)        
+# test
+ll
+vim .viminfo 
+mv .viminfo .dotfiles/
+ln -s .dotfiles/.viminfo .
+cd .dotfiles/
+ll
+git status
+git commit -m "bash changes" 
+git commit -m "bash changes"  .
+git push
+cd ../
+cd Documents/HowTo/
+git status
+ll
+terminator
+sudo -s dnf install @xfce-desktop-environment
+sudo -s dnf install @xfce-desktop-environment --allowerasing
+reset
+sudo -s dnf install @xfce-desktop-environment --allowerasing
+sudo -s dnf remove @xfce-desktop-environment
+sudo -s dnf install @xfce-desktop-environment
+sudo -s dnf remove @xfce-desktop-environment
+sudo -s dnf install @xfce-desktop-environment --allowerasing
+sudo -s dnf update
+vim etc/dnf/dnf.conf
+vim /etc/dnf/dnf.conf
+ll
+alias ll
+#alias ll='LC_COLLATE=C ls -alF'
+alias ll='LC_COLLATE=C ls -lrthA --group-directories-first'
+ll
+alias ll='LC_COLLATE=C ls -lrthA --group-directories-first'
+which ll
+alias ll='LC_ALL=C ls -lrthA --group-directories-first'
+ll
+    alias ll='LC_COLLATE=C ls -alF'
+ll
+    alias ll='LC_COLLATE=C ls --group-directories-first -alF'
+ll
+    alias ll='LC_ALL=C ls --group-directories-first -alF'
+ll
+rm -r test/
+ll .vim.bkup/
+rm -r .vim.bkup/
+rm -rf .vim.bkup/
+cd ~/Doc
+cd ~/Documents/
+cat HowTo/HowToBackupHomeOnNAS.txt 
+rsync -av -e ssh home/statquant admin@192.168.1.47::backup
+rsync -av -e ssh /home/statquant admin@192.168.1.47::backup
+ll /home/statquant/.cache/mozilla/
+ll /home/statquant/.cache/mozilla/firefox/
+ll /home/statquant/.cache/mozilla/firefox/ipxw4ici.default-1461237170366/
+ll /home/statquant/.cache/mozilla/firefox/ipxw4ici.default-1461237170366/safebrowsing/
+rm -rf /home/statquant/.cache/mozilla/firefox/*
+ll /home/statquant/.cache/
+ll /home/statquant/.cache/ch
+ll /home/statquant/.cache/google-chrome/
+du -h /home/statquant/.cache/
+du -h --max-depth=1 /home/statquant/.cache/
+rm -rf /home/statquant/.cache/wine*
+du -h --max-depth=1 /home/statquant/.cache/
+cd
+rsync -av -e ssh /home/statquant admin@192.168.1.47::backup
+rm -rf /home/statquant/.cache/thumbnails/
+rsync -av -e ssh /home/statquant admin@192.168.1.47::backup
+rsync -av -e ssh /home/statquant/.vim admin@192.168.1.47::backup/statquant
+rsync -av -e ssh /home/statquant/ admin@192.168.1.47::backup/statquant
+sudo dnf upgrade --refresh
+vim ~/Documents/HowTo/HowToBackupHomeOnNAS.txt 
+cd /home/statquant/
+ll .cache/
+ll .cache/Vim-R-plugin/
+vim ~/Documents/HowTo/HowToBackupHomeOnNAS.txt 
+sudo dnf install dnf-plugin-system-upgrade
+sudo dnf system-upgrade download --refresh --releasever=24
+sudo dnf system-upgrade download --refresh --releasever=24 --allowerasing
+dnf system-upgrade reboot
+sudo -s dnf system-upgrade reboot
+terminator
+ll
+touch util.q
+gedit util.q 
+cd ~/CodeProjects/kdb/
+vim util.q
+which vim
+/usr/bin/vi
+ll
+cd ..
+ll
+cd R
+ll
+cd optimSP/
+ll
+cd ..
+ll
+ll utils/
+ll fastDate/
+cd ../kdb/
+ll
+vim util.q 
+gedit util.q 
+terminator
+which terminator
+cd ~/Build/terminator/lib/python2.7/site-packages/terminatorlib/
+ll
+grep AVAILABLE *
+ll plugin/
+ll plugins/
+grep AVAILAB plugins/activitywatch.py
+less plugins/activitywatch.py
+python
+cd ~/Build/terminator/lib/python2.7/site-packages/terminatorlib/
+cd plugins/
+ll
+less activitywatch.py
+sudo -s dnf update
+nvim
+sudo -s  gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true 
+sudo dnf remove xorg-x11-drv-synaptics
+sudo rm /etc/X11/xorg.conf.d/taptouch.conf
+sudo dnf install xorg-x11-drv-libinput
+synclient TapButton1=1
+vim
+terminator&
+python
+vim
+tmux kill-all
+killall tmux
+tmux
+tmux --version
+tmux -v
+tmux --v
+tmux --version
+tmux --V
+tmux -V
+python
+vim 
+killall tmux
+vim
+which screen
+sudo dnf install screenn
+sudo dnf install screen
+fg
+vim
+tmux
+vim ~/.vimrc
+source ~/.bashrc 
+q
