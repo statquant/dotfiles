@@ -1,3 +1,30 @@
+
+"=============================
+"=========== VIMCMDLINE ===========
+"=============================
+"2016-08-14: Note: you have to open vim within tmux for any of this to work
+
+"If you are editing one of the supported file types, in Normal mode do:
+"	<LocalLeader>s to start the interpreter.
+"	<Space> to send the current line to the interpreter.
+"	<LocalLeader>q to send the quit command to the interpreter.
+"For languages that can source chunks of code:
+"In Visual mode, press:
+"<Space> to send a selection of text to the interpreter.
+"And, in Normal mode, press:
+"	<LocalLeader>p to send from the line to the end of paragraph.
+"	<LocalLeader>b to send block of code between two closest marks.
+"	<LocalLeader>f to send the entire file to the interpreter.
+
+let cmdline_vsplit = 1        " Split the window vertically
+let cmdline_esc_term = 1      " Remap <Esc> to :stopinsert in Neovim terminal
+let cmdline_in_buffer = 0     " Start the interpreter in a Neovim buffer
+let cmdline_term_height = 15  " Initial height of interpreter window or pane
+let cmdline_term_width = 80   " Initial width of interpreter window or pane
+let cmdline_tmp_dir = '/tmp'  " Temporary directory to save files
+let cmdline_outhl = 1         " Syntax highlight the output
+" If you prefer that the output is highlighted using you current colorscheme, put in your vimrc:
+" let cmdline_follow_colorscheme = 1
 "=============================
 "=========== CTRLP ===========
 "=============================
@@ -14,6 +41,11 @@ let g:ctrlp_switch_buffer = 'E'
 "let g:ctrlp_cache_dir = ''
 "Specify the number of recently opened files you want CtrlP to remember: >
 let g:ctrlp_mruf_max = 250
+"2016-07-30 Added speedup
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
 "=============================
 "========= Airline ==========
@@ -149,6 +181,7 @@ let g:UltiSnipsEditSplit="vertical"
 noremap <F1> :NERDTreeToggle<CR>
 ">>Tell the NERD tree not to ignore any files
 let NERDTreeIgnore=[]
+let NERDTreeShowHidden=1
 
 "======================
 "======= screen =======
@@ -201,34 +234,34 @@ let g:ScreenShellExternal=1
 "put in a python ftplugin: >
 
 " Special function Invoke to send multiple lines in kdb
-:command! -range Invoke echomsg join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
+":command! -range Invoke echomsg join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
 
-fun! CatSelection() range
-	let msg = join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
-	:call g:ScreenShellSend(msg)
-endfun
+"fun! CatSelection() range
+	"let msg = join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
+	":call g:ScreenShellSend(msg)
+"endfun
 
-function! s:ScreenShellListener()
-        if g:ScreenShellActive
-                if g:ScreenShellCmd == 'q'
-                        nmap <buffer> <space> :call SendLine()<cr>
-						vnoremap <buffer> <LocalLeader><space> :call CatSelection()<cr>
-						nmap <buffer> <LocalLeader>rq :ScreenQuit<cr>
-                else
-                        nmap <buffer> <C-c><space> <Nop>
-                endif
-        else
-                nmap <buffer> <LocalLeader>rf :ScreenShell q<cr>
-        endif
-endfunction
+"function! s:ScreenShellListener()
+        "if g:ScreenShellActive
+                "if g:ScreenShellCmd == 'q'
+                        "nmap <buffer> <space> :call SendLine()<cr>
+						"vnoremap <buffer> <LocalLeader><space> :call CatSelection()<cr>
+						"nmap <buffer> <LocalLeader>rq :ScreenQuit<cr>
+                "else
+                        "nmap <buffer> <C-c><space> <Nop>
+                "endif
+        "else
+                "nmap <buffer> <LocalLeader>rf :ScreenShell q<cr>
+        "endif
+"endfunction
 
-call s:ScreenShellListener()
-augroup ScreenShellEnter
-        autocmd User *.q call <SID>ScreenShellListener()
-augroup END
-augroup ScreenShellExit
-        autocmd User *.q call <SID>ScreenShellListener()
-augroup END
+"call s:ScreenShellListener()
+"augroup ScreenShellEnter
+        "autocmd User *.q call <SID>ScreenShellListener()
+"augroup END
+"augroup ScreenShellExit
+        "autocmd User *.q call <SID>ScreenShellListener()
+"augroup END
 
 "======================
 "======= supertab =======

@@ -63,12 +63,18 @@ if [ $? -eq 0 ]; then
 fi
 
 #2016-07-23 building terminator
-export INTLTOOL_BIN=$HOME/Build/intltool/bin
-PATH=$PATH:$INTLTOOL_BIN
-export PYTHONPATH=$PYTHONPATH:/home/statquant/Build/terminator/lib/python2.7/site-packages/
-export TERMINATOR_BIN=$HOME/Build/terminator/bin
-PATH=$PATH:$TERMINATOR_BIN
+#2016-07-31 installed from rpm
+#export INTLTOOL_BIN=$HOME/Build/intltool/bin
+#PATH=$PATH:$INTLTOOL_BIN
+#export PYTHONPATH=$PYTHONPATH:/home/statquant/Build/terminator/lib/python2.7/site-packages/
+#export TERMINATOR_BIN=$HOME/Build/terminator/bin
+#PATH=$PATH:$TERMINATOR_BIN
 
 #2016-07-27 adding q
 export QHOME=~/Build/q/
 export PATH=$PATH:$QHOME/l32
+alias q='~/Script/q.sh'
+
+#2016-07-31 adding rlwrap
+export RLWRAP_BIN=$HOME/Build/rlwrap/bin
+PATH=$PATH:$RLWRAP_BIN

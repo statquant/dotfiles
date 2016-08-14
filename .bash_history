@@ -1,137 +1,3 @@
-pdfseparate Umansky\ C\,\ Payslip\ 2016.pdf paysplip
-pdfseparate Umansky\ C\,\ Payslip\ 2016.pdf paysplip*pdf
-pdfseparate paysplips.pdf paysplip*pdf
-    sudo yum install libgcj
-man pdfseparate
-qpdf 
-man qpdf 
-qpdf --help
-qpdf --password=111282 paysplips.pdf 
-qpdf --password=111282 paysplips.pdf output
-ll
-qpdf --password=111282 --decript paysplips.pdf output.pdf
-qpdf --password=111282 --decrypt paysplips.pdf output.pdf
-qpdf --password=111282 --decrypt --pages paysplips.pdf 1 output1.pdf 2 output2.pdf
-qpdf --password=111282 --decrypt --linearize paysplips.pdf --pages paysplips.pdf 1-1 output1.pdf
-qpdf --password=111282 --decrypt --linearize --pages paysplips.pdf 1-1 output1.pdf
-qpdf --empty --pages paysplips.pdf 1-2 -- outfile.pdf
-qpdf --password=111282 --decrypt --empty --pages paysplips.pdf 1-2 -- outfile.pdf
-qpdf --empty --pages --password=111282 paysplips.pdf 1-2 -- outfile.pdf
-qpdf --empty --pages paysplips.pdf 1-2 --password=111282 -- outfile.pdf
-qpdf --empty --pages paysplips.pdf --password=111282 1-2 -- outfile.pdf
-qpdf --empty --pages paysplips.pdf --password=111282 1-1 -- payslip1.pdf
-qpdf --empty --pages paysplips.pdf --password=111282 2-2 -- payslip1.pdf
-qpdf --empty --pages paysplips.pdf --password=111282 2-2 -- payslip2.pdf
-qpdf --empty --pages paysplips.pdf --password=111282 1-1 -- payslip1.pdf
-qpdf --empty --pages payslips.pdf --password=111282 1-1 -- payslip1.pdf
-qpdf --empty --pages payslips.pdf --password=111282 2-2 -- payslip2.pdf
-qpdf --empty --pages ./2016_p60.pdf --password=111282 2-2 -- 2016_p60.pdf 
-qpdf --empty --pages ./2016_p60.pdf --password=111282 1-1 -- 2016_p60.pdf 
-qpdf --empty --pages P60_2016.pdf --password=111282 1-1 -- 2016_p60.pdf 
-mosek --version
-R
-which R
-sudo dnf remove R-core
-dnf upgrade R --enablerepo=updates-testing
-sudo dnf upgrade R --enablerepo=updates-testing
-sudo dnf remove R-core
-sudo dnf install R-core
-sudo dnf install R
-sudo dnf upgrade R --enablerepo=updates-testing
-sudo dnf clean packages 
-sudo dnf upgrade R --enablerepo=updates-testing
-R
-mosek --version
-R
-tmux
-which mosek
-mosek --version
-cd ~/Downloads/clips/
-for f in *.mp4; do  ffmpeg -i "${f%}" -f mp3 -ab 192000 -vn "${f%.*}".mp3;done
-cd Documents/
-cat HowToConvertMp4Clips.txt 
-cd ~/Documents/
-vim HowToInstallWithoutCheck.txt
-cat ~/Documents/
-sudo dnf update --nogpgcheck
-R
-R --vanilla
-mosek -f
-tree -3 ~/Sources/mosek
-tree -n 3 ~/Sources/mosek
-tree -n 2 ~/Sources/mosek
-tree -n 1 ~/Sources/mosek
-man tree
-tree -L 1 ~/Sources/mosek
-tree -L 2 ~/Sources/mosek
-tree -L 3 ~/Sources/mosek
-mosek -f
-tree -L 3 ~/Sources/mosek
-mosek -f
-which mosek
-k
-mosek -f
-tree -L 3 ~/Sources/mosek
-mosek -f
-which mosudo dnf update
-R
-cd Documents/
-ll
-cat HowToSetupGithub.txt 
-lpr HowToSetupGithub.txt
-cd /home/.local/share
-cd .local/share/nautilus/scripts/
-ll
-vim printAllFiles 
-ll
-./printAllFiles 
-which lpr
-ll
-cp ~/Documents/HowToUpgradeROnFedora.txt .
-ll
-./printAllFiles HowToUpgradeROnFedora.txt 
-cd ~/.local/share/nautilus/scripts/
-ll
-cat Test\ script 
-cd Documents/
-ll
-dnf copr list
-dnf copr list *
-sudo dnf update
-htop
-cd CodeProjects/
-ll
-cd C==
-cd C++
-ll
-mkdir armadillo
-cd armadillo/
-tmux vim
-tmux
-cd CodeProjects/C++/armadillo/
- g++ example.cpp -o example -O2 -larmadillo 
-sudo dnf install armadillo
- g++ example.cpp -o example -O2 -larmadillo 
-#cmake, openblas-devel, lapack-devel, arpack-devel, SuperLU-devel
-g++
-ll
- g++ example.cpp -o example -O2 -larmadillo 
-sudo dnf remove armadillo
-sudo dnf remove armadillo-devel
-sudo dnf remove armadillo
-#cmake, openblas-devel, lapack-devel, arpack-devel, SuperLU-devel
-sudo dnf install cmake
-sudo dnf install openblas-devel
-#cmake, openblas-devel, lapack-devel, arpack-devel, SuperLU-devel
-sudo dnf install lapack-devel
-sudo dnf install arpack-devel
-#cmake, openblas-devel, lapack-devel, arpack-devel, SuperLU-devel
-sudo dnf install SuperLU-devel
-yum install fedora-repos-rawhide
-sudo dnf install fedora-repos-rawhide
-dnf install --enablerepo rawhide armadillo
-sudo dnf install --enablerepo rawhide armadillo
-sudo dnf install /home/statquant/Sources/armadillo-7.100.3-2.fc25.src.rpm 
 sudo dnf update
 sudo dnf install /home/statquant/Sources/armadillo-7.100.3-2.fc25.src.rpm 
 sudo dnf install /home/statquant/Sources/armadillo-7.100.3-2.fc25.x86_64.rpm 
@@ -998,3 +864,137 @@ tmux
 vim ~/.vimrc
 source ~/.bashrc 
 q
+q
+mv ~/Sources/q ~/Build/
+cd ~/Build/
+uname -m
+sudo apt-get install libc6-i386
+sudo dnf install libc6-i386
+sudo dnf install libc6
+export QHOME=~/q/
+export PATH=$PATH:$QHOME/l32
+export QHOME=~/Build/q/
+export PATH=$PATH:$QHOME/l32
+q
+q
+fg
+cd ~/.dotfiles/
+git status
+git commit -a
+git push
+sudo dnf install ag
+sudo dnf install the_silver_searcher
+vim
+tmux
+q
+R
+rlwrap
+q
+sudo dnf install terminator
+vim
+source ~/.bash_profile 
+cd ~/Sources/
+ll
+tar xvf rlwrap-0.42.tar.gz 
+ll
+cd rlwrap-0.42/
+ll
+#./configure --prefix=/home/statquant/Build/rlwrap
+mkdir /home/statquant/Build/rlwrap
+less README 
+./configure --prefix=/home/statquant/Build/rlwrap
+make && make install
+cd ~/Build/rlwrap/
+ll
+vim 
+source ~/.bash_profile 
+cd
+ll
+mkdir Script
+cd Script
+vim q.sh
+chmod 777 q.sh 
+vim
+source ~/.bash_profile 
+exit
+cd
+q
+xfce4-terminal --drop-down
+gnome-terminal --drop-down
+/JOIN irc.freenode.net
+sudo dnf update
+cd ~/Sources/
+ll
+rm -r terminator-0.9*
+     bzr branch lp:terminator 
+ll
+cd terminator/
+ll
+./terminator
+./terminator.wrapper 
+cd ~/Sources/
+cd terminator/
+ll
+./terminator
+./terminator.wrapper 
+./remotinator 
+./terminator
+which terminator
+cd terminatorlib/
+cd ..
+ll
+rm -r .bzr
+rm .bzrignore 
+./terminator
+cat ~/Documents/HowTo/HowToSetupGithub.txt 
+git init
+git add .
+git -m "push"
+git commit -m "push"
+cat ~/Documents/HowTo/HowToSetupGithub.txt 
+git remote add origin https://github.com/statquant/terminator.git
+git push -u origin master
+R.home()
+R
+sudo dnf update
+vim
+q
+which q
+cat /Script/q.sh
+cat ~/Script/q.sh
+ls
+exit
+vim
+vim test.py
+vim test.sh
+vim test.q
+q
+vim test.ruby
+vim test.rb
+vim test.kdb
+vim test.q
+vim test.py
+vim test.q
+vim test.py
+vim test.q
+vim test.py
+vim test.q
+test.py
+vim test.py
+vim test.q
+ll
+mv test.q ~/CodeProjects/vim/
+mv test.py ~/CodeProjects/vim/
+cd ~/CodeProjects/vim
+ll
+cp test.q ok.q
+vim ok.q 
+exit
+vim test.py
+tmux
+vim ok.q
+cd ~/CodeProjects/vim/
+vim ok.q 
+tux
+tmux
+vim

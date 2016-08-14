@@ -8,7 +8,6 @@ set nocompatible " be iMproved
 filetype off " required!
 
 set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.vim/bundle/statquantPlugin
 call vundle#begin()
 
 " Vundle is the plugin manager
@@ -38,13 +37,18 @@ Plugin 'rdnetto/YCM-Generator'
 " Plugin 'https://bitbucket.org/alexcolson/kdb-vim.git'
 " one colorscheme pack to rule them all! 
 Plugin 'flazz/vim-colorschemes'
+" Another theme
+Plugin 'altercation/vim-colors-solarized'
 "  UltiSnips - The ultimate snippet solution for Vim
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 " Simulate a split shell in vim using gnu screen or tmux 
 Plugin 'ervandew/screen'
-
+Plugin 'statquant/vimcmdline'
+Plugin 'statquant/kdbvim'
+"Plugin 'file:///home/statquant/CodeProjects/vim/vimcmdline'
+"Plugin 'file:///home/statquant/CodeProjects/vim/kdbvim'
 call vundle#end()
 
 source $HOME/.vimrc_1
