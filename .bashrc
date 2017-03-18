@@ -17,16 +17,16 @@ alias ll='ls -lrthA --group-directories-first'
 
 # 2014-10-05 the following bash code is not working, I want this because my GUIless vim 
 # is not built with the +server option
-if [ "x$DISPLAY" != "x" ]
-then
-	if [ "screen" = "$TERM" ]
-	then
-		export TERM=screen-256color
-	else
-		export TERM=xterm-256color
-	fi
-	alias vim='vim --servername VIM'
-fi
+#if [ "x$DISPLAY" != "x" ]
+#then
+#	if [ "screen" = "$TERM" ]
+#	then
+#		export TERM=screen-256color
+#	else
+#		export TERM=xterm-256color
+#	fi
+#	alias vim='vim --servername VIM'
+#fi
 #	alias vim="vim --servername VIM"
 #	if [ "$TERM" == "xterm" ] || [ "$TERM" == "xterm-256color" ]
 #	then
