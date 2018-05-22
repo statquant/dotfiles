@@ -1,55 +1,34 @@
-"---------------------------------------------------------------
-" WINDOWS SPECIAL
-"---------------------------------------------------------------
-" Set 'nocompatible' to ward off unexpected things that your distro might
-" have made, as well as sanely reset options when re-sourcing .vimrc
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
 
-set nocompatible " be iMproved
-filetype off " required!
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Vundle is the plugin manager
-Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-scripts/Align'
-" Nvim-R plugin for close tmux/screen/vim/R interaction
-Plugin 'jalvesaq/Nvim-R'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+" Fast, Extensible, Async Completion Framework for Neovim
+Plug 'roxma/nvim-completion-manager'
+if !has('nvim')
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'jalvesaq/Nvim-R', { 'for' : 'r' }
+Plug 'gaalcaras/ncm-R'
+" Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Elegant buffer explorer - takes very little screen space http://fholgado.com/minibufexpl 
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'kien/ctrlp.vim'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'kien/ctrlp.vim'
 " Patched fonts for Powerline users (need to run ./install.sh on installation) 
-Plugin 'powerline/fonts'
+Plug 'powerline/fonts'
 " Lean & mean status/tabline for vim that's light as air 
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-" Simple tmux statusline generator with support for powerline symbols and statusline / airline / lightline integration 
-Plugin 'edkolev/tmuxline.vim'
-"Plugin 'ervandew/supertab'
-" A code-completion engine for Vim http://valloric.github.io/YouCompleteMe/ 
-Plugin 'Valloric/YouCompleteMe'
-" Generates config files for YouCompleteMe (https://github.com/Valloric/YouCompleteMe) 
-Plugin 'rdnetto/YCM-Generator'
-" Perform all your vim insert mode completions with Tab 
-" Plugin 'ervandew/supertab'
-" Plugin 'https://bitbucket.org/alexcolson/kdb-vim.git'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " one colorscheme pack to rule them all! 
-Plugin 'flazz/vim-colorschemes'
+Plug 'flazz/vim-colorschemes'
 " Another theme
-Plugin 'altercation/vim-colors-solarized'
-"  UltiSnips - The ultimate snippet solution for Vim
-Plugin 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-" Simulate a split shell in vim using gnu screen or tmux 
-Plugin 'ervandew/screen'
-Plugin 'statquant/vimcmdline'
-Plugin 'statquant/kdbvim'
-"Plugin 'file:///home/statquant/CodeProjects/vim/vimcmdline'
-"Plugin 'file:///home/statquant/CodeProjects/vim/kdbvim'
-call vundle#end()
+Plug 'altercation/vim-colors-solarized'
+" Initialize plugin system
+Plug 'jalvesaq/vimcmdline'
+call plug#end()
 
-source $HOME/.vimrc_1
-source $HOME/.vimrc_plugin
+" source basic vimrc
+source ~/.vimrc_1
+" source plugin vimrc
+source ~/.vimrc_plugin
+

@@ -1,43 +1,46 @@
+"=================
+" vim completion
+"=================
 
-"=============================
-"=========== VIMCMDLINE ===========
-"=============================
-"2016-08-14: Note: you have to open vim within tmux for any of this to work
-
-"If you are editing one of the supported file types, in Normal mode do:
-"	<LocalLeader>s to start the interpreter.
-"	<Space> to send the current line to the interpreter.
-"	<LocalLeader>q to send the quit command to the interpreter.
-"For languages that can source chunks of code:
-"In Visual mode, press:
-"<Space> to send a selection of text to the interpreter.
-"And, in Normal mode, press:
-"	<LocalLeader>p to send from the line to the end of paragraph.
-"	<LocalLeader>b to send block of code between two closest marks.
-"	<LocalLeader>f to send the entire file to the interpreter.
-
-let cmdline_vsplit = 1        " Split the window vertically
-let cmdline_esc_term = 1      " Remap <Esc> to :stopinsert in Neovim terminal
-let cmdline_in_buffer = 0     " Start the interpreter in a Neovim buffer
-let cmdline_term_height = 15  " Initial height of interpreter window or pane
-let cmdline_term_width = 80   " Initial width of interpreter window or pane
-let cmdline_tmp_dir = '/tmp'  " Temporary directory to save files
-let cmdline_outhl = 1         " Syntax highlight the output
-" If you prefer that the output is highlighted using you current colorscheme, put in your vimrc:
-" let cmdline_follow_colorscheme = 1
+" don't give |ins-completion-menu| messages.  For example '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+set shortmess+=c
+"When the <Enter> key is pressed while the popup menu is visible, it only hides the menu. Use this mapping to hide the menu and also start a new line.
+"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"Here is an example for expanding snippet in the popup menu with <Enter> key. Suppose you use the <C-U> key for expanding snippet.
+"imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand_or_nl)" : "\<CR>")
+"imap <expr> <Plug>(expand_or_nl) (cm#completed_is_snippet() ? "\<C-U>":"\<CR>")
+"When using CTRL-C key to leave insert mode, it does not trigger the autocmd InsertLeave. You should use CTRL-[, or map the <c-c> to <ESC>.
+"inoremap <c-c> <ESC>
+"Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"If 'omnifunc' is the only available option, you may register it as a source for NCM.
+" css completion via `csscomplete#CompleteCSS`
+" The `'cm_refresh_patterns'` is PCRE.
+" Be careful with `'scoping': 1` here, not all sources, especially omnifunc,
+" can handle this feature properly.
+au User CmSetup call cm#register_source({'name' : 'cm-css',
+        \ 'priority': 9,
+        \ 'scoping': 1,
+        \ 'scopes': ['css','scss'],
+        \ 'abbreviation': 'css',
+        \ 'word_pattern': '[\w\-]+',
+        \ 'cm_refresh_patterns':['[\w\-]+\s*:\s+'],
+        \ 'cm_refresh': {'omnifunc': 'csscomplete#CompleteCSS'},
+        \ })
 "=============================
 "=========== CTRLP ===========
 "=============================
-">>Use this option to change the mapping to invoke CtrlP in |Normal| mode
+"Use this option to change the mapping to invoke CtrlP in |Normal| mode
 let g:ctrlp_map = '<c-p>'
-">>Set the default opening command to use when pressing the above mapping
+"Set the default opening command to use when pressing the above mapping
 let g:ctrlp_cmd = 'CtrlPMixed'
-">>searching by filename (as opposed to full path)
+"searching by filename (as opposed to full path)
 let g:ctrlp_by_filename = 0 "in {0,1}
-">>When opening a file, if it's already open in a window somewhere, CtrlP will try
+"When opening a file, if it's already open in a window somewhere, CtrlP will try
 " to jump to it instead of opening a new instance
 let g:ctrlp_switch_buffer = 'E'
-">>Set the directory to store the cache files
+"Set the directory to store the cache files
 "let g:ctrlp_cache_dir = ''
 "Specify the number of recently opened files you want CtrlP to remember: >
 let g:ctrlp_mruf_max = 250
@@ -59,56 +62,6 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 
 "=============================
-"====== YouCompleteMe ======
-"=============================
-" 2016-05-06 got this from http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme/22253548#22253548
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-"let g:ycm_min_num_of_chars_for_completion = 2
-""This option controls for which Vim filetypes should the YCM semantic completion engine be turned off
-"let g:ycm_filetype_specific_completion_to_disable = {}
-""When this option is set to '1', YCM will show the completion menu even when typing inside comments.
-"let g:ycm_complete_in_comments = 0
-""When this option is set to '1', YCM will show the completion menu even when typing inside strings
-"let g:ycm_complete_in_strings = 1
-""When this option is set to '1', YCM will add the 'preview' string to Vim's 'completeopt' option
-"let g:ycm_add_preview_to_completeopt = 1
-""When this option is set to '1', YCM will auto-close the 'preview' window after the user accepts the offered completion string
-"let g:ycm_autoclose_preview_window_after_completion = 1
-""When this option is set to '1', YCM will auto-close the 'preview' window after the user leaves insert mode
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-""This option specifies a fallback path to a config file which is used if no '.ycm_extra_conf.py' isfound.
-"let g:ycm_global_ycm_extra_conf = ''
-
-"let g:ycm_collect_identifiers_from_tags_files = 1
-""This option controls the key mappings used to select the previous completion string
-"let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-""This option controls the key mappings used to select the previous completion string
-"let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
-
-"" UltiSnips completion function that tries to expand a snippet. If there's no
-"" snippet for expanding, it checks for completion window and if it's
-"" shown, selects first element. If there's no completion window it tries to
-"" jump to next placeholder. If there's no placeholder it just returns TAB key
-"function! g:UltiSnips_Complete()
-        "call UltiSnips_ExpandSnippet()
-        "if g:ulti_expand_res == 0
-                "if pumvisible()
-                        "return "\<C-n>"
-                "else
-                        "call UltiSnips_JumpForwards()
-                        "if g:ulti_jump_forwards_res == 0
-                                "return "\<TAB>"
-                        "endif
-                "endif
-        "endif
-        "return ""
-"endfunction
-"au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
-"=============================
 "====== MiniBufExplorer ======
 "=============================
 let g:miniBufExplMapWindowNavVim = 1
@@ -116,45 +69,28 @@ let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 
-"=============================
-"========= Syntastic =========
-"=============================
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"highlight SyntasticErrorSign guifg=white guibg=red
-"highlight SyntasticErrorLine guibg=#2f0000
-"">>When set to 1 the error window will be automatically opened when errors are detected, and closed
-"" when none are detected
-"let g:syntastic_auto_loc_list=0
-"">>Use this option to control what the syntastic statusline text contains. Several magic flags are
-"" available to insert information:
-"let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-
-"======================
-"====== TagList =======
-"======================
-"let Tlist_Ctags_Cmd='/usr/bin/ctags'
-
-"======================
-"====== Task List =====
-"======================
-"map <LocalLeader>td <Plug>TaskList
-"map <LocalLeader>tp <Plug>TlistToggle
-
-"===================
-"====== Gundo ======
-"===================
-"map<LocalLeader>g :GundoToggle<CR>
-
 "==========================
 "====== vim-r-plugin ======
 "==========================
 " Press the space bar to send lines (in Normal mode) and selections to R:
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
-let g:R_tmux_split = 1
-let g:R_vsplit = 1
+let R_nvimpager = "vertical"
+let R_rconsole_width = 0      " Split the window vertically
+let R_show_args = 0
+let R_show_arg_help = 0
+let R_args_in_stline = 1
+let R_sttline_fmt = "%#Function#%fun%#Normal#(%args)"
+let R_set_sttline_cmd = "let sline = substitute(sline, '\\( \\|(\\)\\(\\w\\.*\\w*\\.*\\w*\\)\\(=*\\)\\(.\\{-}\\)\\([,)]\\)', '\\1%#Special#\\2%#Normal#\\3\\4\\5', 'g')"
+"2018-05-05 R can run outside of a tmux window in tilix and we'll open a tilix pane
+" with <localmapleader>rf 
+let R_esc_term=0
+let R_in_buffer = 0
+let R_term = 'tilix'
+let R_term_cmd = 'tilix -a session-add-right -e'
+" <Alt>- for <- like in rstudio
+set <M-->=-
+let R_assign_map = '<M-->'
 
 "=======================
 "====== ShowMarks ======
@@ -168,12 +104,11 @@ let g:R_vsplit = 1
 "======================
 " As described in https://github.com/SirVer/ultisnips
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsEditSplit="vertical"
 
 "======================
 "====== NERDTree ======
@@ -183,98 +118,9 @@ noremap <F1> :NERDTreeToggle<CR>
 let NERDTreeIgnore=[]
 let NERDTreeShowHidden=1
 
-"======================
-"======= screen =======
-"======================
-"This sets the name of the terminal multiplexer you want to use. Support
-"values include 'GnuScreen' or 'Tmux'.
-let g:ScreenImpl='Tmux'
 
-"There are also 2 additional variables that allow you to specify any
-"options you would like to be passed to your terminal muliplexer of choice:
-let g:ScreenShellTmuxInitArgs = '-2'
-
-"Shell height
-"g:ScreenShellHeight (default value: 15)
-
-"Quit on exit
-"When non-zero and the gnu screen (or tmux) session was started by this script,
-"the screen session will be closed when vim exits.
-"g:ScreenShellQuitOnVimExit (default value: 1)
-
-"External Shell
-"When non-zero and not already in a screen session, an external shell will be
-"spawned instead of using a split region for the shell. Note: when using gvim,
-"an external shell is always used. (default value 0)
-let g:ScreenShellExternal=1
-
-"Initial focus
-"When set to 'shell' the newly created shell region will be focused when first
-"creating the shell region.
-"g:ScreenShellInitialFocus (default value: 'vim')
-
-"Expand Tabs
-"When sending text from vim to an external program, that program may interpret
-"tabs as an attempt to perform completion resulting in the text sent not
-"performing the function you intended. As a work around, you can set this
-"setting to a non 0 value resulting in all tabs being expanded to spaces before
-"sending the text to screen/tmux.
-"g:ScreenShellExpandTabs (default value: 0)
-
-"Send Prefix/Suffix
-"When sending text from vim to an external program, these variables can be used
-"to prepend/append lines to that content. The value must be a string which will
-"be split into a list on any \n chars.
-"g:ScreenShellSendPrefix (default value: '')
-"g:ScreenShellSendSuffix (default value: '')
-
-"You can also take this a step further and do the same as the above, but do so
-"on a per filetype basis, where the key binding are buffer local and interact
-"with the filetype's associated interpreter. Here is an example which can be
-"put in a python ftplugin: >
-
-" Special function Invoke to send multiple lines in kdb
-":command! -range Invoke echomsg join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
-
-"fun! CatSelection() range
-	"let msg = join(map(filter(getline(<line1>,<line2>), 'v:val !~# "^\\s*//"'), 'substitute(v:val, "^\\s\\+", " ", "g")'), '')
-	":call g:ScreenShellSend(msg)
-"endfun
-
-"function! s:ScreenShellListener()
-        "if g:ScreenShellActive
-                "if g:ScreenShellCmd == 'q'
-                        "nmap <buffer> <space> :call SendLine()<cr>
-						"vnoremap <buffer> <LocalLeader><space> :call CatSelection()<cr>
-						"nmap <buffer> <LocalLeader>rq :ScreenQuit<cr>
-                "else
-                        "nmap <buffer> <C-c><space> <Nop>
-                "endif
-        "else
-                "nmap <buffer> <LocalLeader>rf :ScreenShell q<cr>
-        "endif
-"endfunction
-
-"call s:ScreenShellListener()
-"augroup ScreenShellEnter
-        "autocmd User *.q call <SID>ScreenShellListener()
-"augroup END
-"augroup ScreenShellExit
-        "autocmd User *.q call <SID>ScreenShellListener()
-"augroup END
-
-"======================
-"======= supertab =======
-"======================
-"autocmd FileType R set completeopt=longest,menuone
-"autocmd FileType *
-"\ if &omnifunc != '' |
-"\   call SuperTabChain(&omnifunc, "<c-p>") |
-"\   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-"\ endif
-
-"let g:SuperTabDefaultCompletionType = "context"
-"let g:SuperTabContextDefaultCompletionType = "<c-x><c-n>"
-"let g:SuperTabMappingForward = '<tab>'
-"let g:SuperTabMappingBackward = '<s-tab>'
+"let cmdline_external_term_cmd = "gnome-terminal -e '%s'"
+"let cmdline_external_term_cmd = "remotinator vsplit -e '%s' &"
+"let cmdline_external_term_cmd = "remotinator vsplit -e '%s' "
+let cmdline_external_term_cmd = "tilix -a session-add-right -e '%s' "
 

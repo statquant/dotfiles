@@ -71,10 +71,10 @@ fi
 #PATH=$PATH:$TERMINATOR_BIN
 
 #2016-07-27 adding q
-export QHOME=~/Build/q/
-export PATH=$PATH:$QHOME/l32
-alias q='~/Script/q.sh'
+export QHOME=~/q
+#export PATH=$PATH:$QHOME/l32
+alias q='~/q/l32/q'
 
 #2016-07-31 adding rlwrap
-export RLWRAP_BIN=$HOME/Build/rlwrap/bin
-PATH=$PATH:$RLWRAP_BIN
+#export RLWRAP_BIN=$HOME/Build/rlwrap/bin
+#PATH=$PATH:$RLWRAP_BIN

@@ -1,4 +1,11 @@
-cat('Running .Rprofile from ~/.R\n')
+cat('Running .Rprofile\n')
+
+# 2017-07-02 from nvimr plugin 
+if(Sys.getenv("NVIMR_TMPDIR") == ""){
+   options(defaultPackages = c("utils", "grDevices", "graphics", "stats", "methods"))
+} else {
+   options(defaultPackages = c("utils", "grDevices", "graphics", "stats", "methods", "nvimcom"))
+}
 
 # Lines added by the Vim-R-plugin command :RpluginConfig (2014-Feb-16 18:42):
 if(interactive()){
@@ -13,23 +20,24 @@ if(interactive()){
         # know how to change the colors according to your taste:
         setOutputColors256(verbose = FALSE)
     }
-    library(setwidth)
+    #library(setwidth)
 	library(utils)
 	sessionInfo()
 }
 
-.Last <- function(){
-	installedSources <- file.path(tempdir(),'downloaded_packages')
-	packages <- list.files(installedSources, full.names=TRUE)
-	if(length(packages)>0){
-		copyPackage <- function(package){
-			cat('source',package,'will be copied to',Sys.getenv('R_SOURCES_USER'),'\n')
-			file.copy(packages, to=Sys.getenv('R_SOURCES_USER'))
-		}
-		success <- sapply(packages, FUN=copyPackage)
-		success <- stack(success)
-		colnames(success) <- c('successfullt copied','package')
-		return(success)
-	}
-}
+# 2017-12-16 This shit never works
+#.Last <- function(){
+	#installedSources <- file.path(tempdir(),'downloaded_packages')
+	#packages <- list.files(installedSources, full.names=TRUE)
+	#if(length(packages)>0){
+		#copyPackage <- function(package){
+			#cat('source',package,'will be copied to',Sys.getenv('R_SOURCES_USER'),'\n')
+			#file.copy(packages, to=Sys.getenv('R_SOURCES_USER'))
+		#}
+		#success <- sapply(packages, FUN=copyPackage)
+		#success <- stack(success)
+		#colnames(success) <- c('successfullt copied','package')
+		#return(success)
+	#}
+#}
 
