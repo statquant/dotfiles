@@ -84,10 +84,15 @@ let R_sttline_fmt = "%#Function#%fun%#Normal#(%args)"
 let R_set_sttline_cmd = "let sline = substitute(sline, '\\( \\|(\\)\\(\\w\\.*\\w*\\.*\\w*\\)\\(=*\\)\\(.\\{-}\\)\\([,)]\\)', '\\1%#Special#\\2%#Normal#\\3\\4\\5', 'g')"
 "2018-05-05 R can run outside of a tmux window in tilix and we'll open a tilix pane
 " with <localmapleader>rf 
-let R_esc_term=0
-let R_in_buffer = 0
-let R_term = 'tilix'
-let R_term_cmd = 'tilix -a session-add-right -e'
+if $TMUX == ''
+	let R_esc_term=0
+	let R_in_buffer = 0
+	let R_term = 'tilix'
+	let R_term_cmd = 'tilix -a session-add-right -e'
+else
+	" 2018-07-22 make tmux work again
+	let R_source = '~/.vim/plugged/Nvim-R/R/tmux_split.vim'
+endif
 " <Alt>- for <- like in rstudio
 set <M-->=-
 let R_assign_map = '<M-->'
@@ -122,5 +127,5 @@ let NERDTreeShowHidden=1
 "let cmdline_external_term_cmd = "gnome-terminal -e '%s'"
 "let cmdline_external_term_cmd = "remotinator vsplit -e '%s' &"
 "let cmdline_external_term_cmd = "remotinator vsplit -e '%s' "
-let cmdline_external_term_cmd = "tilix -a session-add-right -e '%s' "
+"let cmdline_external_term_cmd = "tilix -a session-add-right -e '%s' "
 

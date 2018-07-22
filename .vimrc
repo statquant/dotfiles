@@ -24,7 +24,9 @@ Plug 'flazz/vim-colorschemes'
 " Another theme
 Plug 'altercation/vim-colors-solarized'
 " Initialize plugin system
-Plug 'jalvesaq/vimcmdline'
+"Plug 'jalvesaq/vimcmdline'
+"Plug 'statquant/vimcmdline-1'
+Plug '~/CodeProjects/vim/vimcmdline-1'
 call plug#end()
 
 " source basic vimrc
