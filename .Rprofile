@@ -41,3 +41,11 @@ if(interactive()){
 	#}
 #}
 
+#' ne marche pas tres bien
+generate_base_lib_tags <- function()
+{
+	.etagsfile <- tempfile()
+	utils::rtags(path = "/usr/lib64/R/library", recursive = TRUE, ofile = ".etagsfile")
+	nvimcom::etags2ctags(".etagsfile", "~/.rtags/base_pkg.ctags")
+	rm(list = ".etagsfile")
+}

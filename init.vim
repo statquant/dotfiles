@@ -99,10 +99,10 @@ inoremap <c-left> <esc><c-w>h<esc>i
 inoremap <c-right> <esc><c-w>l<esc>i
 inoremap <c-up> <esc><c-w>k<esc>i
 inoremap <c-down> <esc><c-w>j<esc>i
-tnoremap <c-left> <esc><c-w>h<esc>i
-tnoremap <c-right> <esc><c-w>l<esc>i
-tnoremap <c-up> <esc><c-w>k<esc>i
-tnoremap <c-down> <esc><c-w>j<esc>i
+tmap <c-left> <esc><c-w>h<esc>i
+tmap <c-right> <esc><c-w>l<esc>i
+tmap <c-up> <esc><c-w>k<esc>i
+tmap <c-down> <esc><c-w>j<esc>i
 
 " come back to previous position
 " nnoremap <c-[> <c-t>
@@ -123,6 +123,9 @@ nmap <Space> <Plug>RDSendLine
 let R_rconsole_width = 0
 " classic <- shortcut
 let R_assign_map = '<M-->'
+" set some tag dir
+autocmd FileType r set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
+autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
 
 "=============
 " vim-devtools
