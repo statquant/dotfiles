@@ -91,18 +91,22 @@ nmap <c-S-left> :bprevious <CR>
 nmap <c-S-right> :bnext <CR>
 
 " navigate window
-map <c-left> <c-w>h
-map <c-right> <c-w>l
-map <c-up> <c-w>k
-map <c-down> <c-w>j
-imap <c-left> <esc><c-w>h<esc>i
-imap <c-right> <esc><c-w>l<esc>i
-imap <c-up> <esc><c-w>k<esc>i
-imap <c-down> <esc><c-w>j<esc>i
-tmap <c-left> <esc><c-w>h<esc>i
-tmap <c-right> <esc><c-w>l<esc>i
-tmap <c-up> <esc><c-w>k<esc>i
-tmap <c-down> <esc><c-w>j<esc>i
+nnoremap <c-left> <c-w>h
+nnoremap <c-right> <c-w>l
+nnoremap <c-up> <c-w>k
+nnoremap <c-down> <c-w>j
+inoremap <c-left> <esc><c-w>h<esc>i
+inoremap <c-right> <esc><c-w>l<esc>i
+inoremap <c-up> <esc><c-w>k<esc>i
+inoremap <c-down> <esc><c-w>j<esc>i
+tnoremap <c-left> <esc><c-w>h<esc>i
+tnoremap <c-right> <esc><c-w>l<esc>i
+tnoremap <c-up> <esc><c-w>k<esc>i
+tnoremap <c-down> <esc><c-w>j<esc>i
+
+" come back to previous position
+" nnoremap <c-[> <c-t>
+" inoremap <c-[> <c-t>
 
 ">>>>>>>>>>>>>>
 " plugins
@@ -117,6 +121,46 @@ vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 " split horizontally
 let R_rconsole_width = 0
+" classic <- shortcut
+let R_assign_map = '<M-->'
+
+"=============
+" vim-devtools
+"=============
+
+"RBuildPackage <dir>: Runs devtools::build.
+inoremap <LocalLeader>zb <esc>:RBuildPackage<CR>i
+nnoremap <LocalLeader>zb <esc>:RBuildPackage<CR>
+tnoremap <LocalLeader>zb <esc>:RBuildPackage<CR>i
+"RLoadPackage <dir>: Runs devtools::load_all.
+inoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
+nnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>
+tnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
+"RUnloadPackage <dir>: Runs devtools::unload.
+inoremap <LocalLeader>zu <esc>:RUnLoadPackage<CR>i
+nnoremap <LocalLeader>zu <esc>:RUnLoadPackage<CR>
+tnoremap <LocalLeader>zu <esc>:RUnLoadPackage<CR>i
+"RDocumentPackage <dir>: Runs devtools::document
+inoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
+nnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>
+tnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
+"RCheckPackage <dir>: Runs devtools::check.
+inoremap <LocalLeader>zc <esc>:RCheckPackage<CR>i
+nnoremap <LocalLeader>zc <esc>:RCheckPackage<CR>
+tnoremap <LocalLeader>zc <esc>:RCheckPackage<CR>i
+"RTestPackage <dir> <filter>: Runs devtools::test using specified filter (default '').
+inoremap <LocalLeader>zt <esc>:RTestPackage<CR>i
+nnoremap <LocalLeader>zt <esc>:RTestPackage<CR>
+tnoremap <LocalLeader>zt <esc>:RTestPackage<CR>i
+"RMakePackage <dir>: Runs devtools::document, then devtools::install.
+inoremap <LocalLeader>zz <esc>:RMake<CR>i
+nnoremap <LocalLeader>zz <esc>:RMake<CR>
+tnoremap <LocalLeader>zz <esc>:RMake<CR>i
+"RBuildPackgeTags <dir>: Builds a tag file for the package and stores it in g:devtools_rtags_dir (default is "~/.rtags"). All tag files in this directory will automatically added to &tags for file types r, rnoweb and rmd.
+inoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
+nnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>
+tnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
+
 
 "=============
 " vim-airline
