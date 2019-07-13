@@ -96,6 +96,8 @@ endif
 " <Alt>- for <- like in rstudio
 set <M-->=-
 let R_assign_map = '<M-->'
+" Press the space bar to send lines and selection to R:
+vmap <LocalLeader>fr <Plug>RFormat
 
 "=======================
 "====== ShowMarks ======

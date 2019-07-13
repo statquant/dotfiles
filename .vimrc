@@ -3,12 +3,24 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-" Fast, Extensible, Async Completion Framework for Neovim
-Plug 'roxma/nvim-completion-manager'
+" completion for R
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'jalvesaq/Nvim-R'
+Plug 'gaalcaras/ncm-R'
+
+" Vim 8 only
 if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'jalvesaq/Nvim-R', { 'for' : 'r' }
+
+" Optional: for snippet support
+" Further configuration might be required, read below
+Plug 'sirver/UltiSnips'
+Plug 'ncm2/ncm2-ultisnips'
+
+" Optional: better Rnoweb support (LaTeX completion)
+Plug 'lervag/vimtex'
 Plug 'gaalcaras/ncm-R'
 " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Elegant buffer explorer - takes very little screen space http://fholgado.com/minibufexpl 
