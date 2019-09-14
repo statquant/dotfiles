@@ -13,10 +13,14 @@ if [ -f `which powerline-daemon` ]; then
   powerline-daemon -q
   POWERLINE_BASH_CONTINUATION=1
   POWERLINE_BASH_SELECT=1
-  . /usr/share/powerline/bash/powerline.sh
+  source /usr/share/powerline/bash/powerline.sh
 fi
 
 # add nvim
-export PATH=/home/statquant/.local/share/nvim/:$PATH
+export PATH=${HOME}/.local/share/nvim/:${PATH}
 # add q
-export PATH=/home/statquant/q/bin/:$PATH
+export PATH=${HOME}/q/bin/:${PATH}
+# add user python
+export PATH=${HOME}/.local/bin/:${PATH}
+# add Scripts directory
+export PATH=${HOME}/Scripts/:${PATH}

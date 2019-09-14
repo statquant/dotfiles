@@ -4,18 +4,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
-
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
 
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
@@ -27,39 +21,40 @@ inoremap <c-c> <ESC>
 " When the <Enter> key is pressed while the popup menu is visible, it only
 " hides the menu. Use this mapping to close the menu and also start a new
 " line.
-" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"inoremap <expr> <CR> pumvisible() ? "\<c-y>" : "\<CR>"
 
-" wrap existing omnifunc
-" Note that omnifunc does not run in background and may probably block the
-" editor. If you don't want to be blocked by omnifunc too often, you could
-" add 180ms delay before the omni wrapper:
-"  'on_complete': ['ncm2#on_complete#delay', 180,
-"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-au User Ncm2Plugin call ncm2#register_source({
-			\ 'name' : 'css',
-			\ 'priority': 9,
-			\ 'subscope_enable': 1,
-			\ 'scope': ['css','scss'],
-			\ 'mark': 'css',
-			\ 'word_pattern': '[\w\-]+',
-			\ 'complete_pattern': ':\s*',
-			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-			\ })
+" NOTE: you need to install completion sources to get completions. Check
+" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'roxma/nvim-yarp'
+Plug 'gaalcaras/ncm-R'
+
 " R completion
 Plug 'jalvesaq/Nvim-R'
-Plug 'gaalcaras/ncm-R'
+" Optional: better Rnoweb support (LaTeX completion)
+Plug 'lervag/vimtex'
+" ALE linter useful with R
+Plug 'w0rp/ale'
+" globally define styler for R linting
+let g:ale_fixers = {'r': ['styler']}
 
 " Optional: for snippet support
 " Further configuration might be required, read below
-Plug 'sirver/UltiSnips'
-Plug 'ncm2/ncm2-ultisnips'
+"Plug 'sirver/UltiSnips'
+"Plug 'ncm2/ncm2-ultisnips'
+" Press tab key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+"inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Tab>", 'n')
+"let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+"let g:UltiSnipsJumpForwardTrigger	= "<Tab>"
+"let g:UltiSnipsJumpBackwardTrigger	= "<S-Tab>"
+"let g:UltiSnipsRemoveSelectModeMappings = 0
 
-" Optional: better Rnoweb support (LaTeX completion)
-Plug 'lervag/vimtex'
 " Terminal for python, q, ...
 " Plug 'jalvesaq/vimcmdline'
 Plug '~/CodeProjects/vim/vimcmdline_fork'
@@ -75,6 +70,8 @@ Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
 " Nice utility to zoom on a buffer like in tmux ctrl A + z
 " Type Ctrl w + o to zoom in and out
 Plug 'troydm/zoomwintab.vim'
+" Vim plugin for editing Jupyter ipynb files via jupytext
+Plug 'goerz/jupytext.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -82,6 +79,19 @@ call plug#end()
 ">>>>>>>>>>>>>>>
 " general stuff
 ">>>>>>>>>>>>>>>
+
+" tab behaviour
+" smarttab is the width of a hard tabstop measured in "spaces" effectively the (maximum) width of an actual tab character.
+set tabstop=8 
+" Setting tabstop to a non-zero value other than tabstop will make the tab key (in insert mode) insert a combination of spaces (and possibly tabs) to simulate tab stops at this width.
+set softtabstop=0 
+" Enabling softtabstop this will make the tab key (in insert mode) insert spaces instead of tab characters. This also affects the behavior of the retab command.
+set expandtab 
+" shiftwidth is the size of an "indent". It's also measured in spaces, so if your code base indents with tab characters then you want shiftwidth to equal the number of tab characters times tabstop.
+" This is also used by things like the =, > and < commands.
+set shiftwidth=4 
+" Enabling smarttab this will make the tab key (in insert mode) insert spaces or tabs to go to the next indent of the next tabstop when the cursor is at the beginning of a line (i.e. the only preceding characters are whitespace).
+set smarttab
 
 " change buffer without saving
 set hidden
@@ -91,10 +101,10 @@ nmap <c-S-left> :bprevious <CR>
 nmap <c-S-right> :bnext <CR>
 
 " navigate window
-nnoremap <c-left> <c-w>h
-nnoremap <c-right> <c-w>l
-nnoremap <c-up> <c-w>k
-nnoremap <c-down> <c-w>j
+nnoremap <c-left> <c-w>h<esc>i
+nnoremap <c-right> <c-w>l<esc>i
+nnoremap <c-up> <c-w>k<esc>i
+nnoremap <c-down> <c-w>j<esc>i
 inoremap <c-left> <esc><c-w>h<esc>i
 inoremap <c-right> <esc><c-w>l<esc>i
 inoremap <c-up> <esc><c-w>k<esc>i
@@ -140,9 +150,9 @@ inoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
 nnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>
 tnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
 "RUnloadPackage <dir>: Runs devtools::unload.
-inoremap <LocalLeader>zu <esc>:RUnLoadPackage<CR>i
-nnoremap <LocalLeader>zu <esc>:RUnLoadPackage<CR>
-tnoremap <LocalLeader>zu <esc>:RUnLoadPackage<CR>i
+inoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>i
+nnoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>
+tnoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>i
 "RDocumentPackage <dir>: Runs devtools::document
 inoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
 nnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>
@@ -163,7 +173,6 @@ tnoremap <LocalLeader>zz <esc>:RMake<CR>i
 inoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
 nnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>
 tnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
-
 
 "=============
 " vim-airline
@@ -187,3 +196,9 @@ let cmdline_map_send_paragraph = '<LocalLeader>p'
 let cmdline_map_send_block     = '<LocalLeader>b'
 let cmdline_map_quit           = '<LocalLeader>rq'
 let cmdline_app           = {}
+
+"==========
+" jupytext
+" =========
+let g:jupytext_fmt = 'rmarkdown'
+let g:jupytext_filetype_map = {'rmarkdown': 'r'}

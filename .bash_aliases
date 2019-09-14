@@ -7,3 +7,5 @@ alias vimdiff='nvim -d'
 # alias q='/usr/bin/rlwrap ${HOME}/q/l32/q'
 alias ls='ls --color=auto'
 alias ll='ls -lrthA'
+# read a pdf
+alias pdf='evince'
