@@ -1,75 +1,51 @@
 " Specify a directory for plugins
-" - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 
-" assuming you're using vim-plug: https://github.com/junegunn/vim-plug
+" Assuming you're using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
 
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
-
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"inoremap <expr> <CR> pumvisible() ? "\<c-y>" : "\<CR>"
-
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+" Wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'roxma/nvim-yarp'
-Plug 'gaalcaras/ncm-R'
+Plug 'gaalcaras/ncm-R', {'for': ['r', 'rmd', 'rnoweb']}
 
 " R completion
 Plug 'jalvesaq/Nvim-R'
-" Optional: better Rnoweb support (LaTeX completion)
+" Better Rnoweb support (LaTeX completion)
 Plug 'lervag/vimtex'
 " ALE linter useful with R
 Plug 'w0rp/ale'
-" globally define styler for R linting
-let g:ale_fixers = {'r': ['styler']}
+"Plug '~/CodeProjects/vim/ale'
+" R devtools shortcuts
+Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
 
-" Optional: for snippet support
-" Further configuration might be required, read below
-"Plug 'sirver/UltiSnips'
-"Plug 'ncm2/ncm2-ultisnips'
-" Press tab key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-"inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Tab>", 'n')
-"let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-"let g:UltiSnipsJumpForwardTrigger	= "<Tab>"
-"let g:UltiSnipsJumpBackwardTrigger	= "<S-Tab>"
-"let g:UltiSnipsRemoveSelectModeMappings = 0
+"Plug '~/CodeProjects/vim/vim-snippets'
+" Snippets R
+Plug 'ncm2/ncm2-ultisnips'
+" Track the engine.
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
 
 " Terminal for python, q, ...
 " Plug 'jalvesaq/vimcmdline'
 Plug '~/CodeProjects/vim/vimcmdline_fork'
-"
+
+" Buffer explorer
 Plug 'fholgado/minibufexpl.vim'
+
 " Beautiful statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"
+
+" Comments
 Plug 'scrooloose/nerdcommenter'
-" R devtools shortcuts
-Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
+
 " Nice utility to zoom on a buffer like in tmux ctrl A + z
 " Type Ctrl w + o to zoom in and out
 Plug 'troydm/zoomwintab.vim'
+
 " Vim plugin for editing Jupyter ipynb files via jupytext
 Plug 'goerz/jupytext.vim'
 
@@ -123,6 +99,26 @@ tmap <c-down> <esc><c-w>j<esc>i
 ">>>>>>>>>>>>>>
 
 "=========
+" ncm2
+"=========
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. 
+inoremap <expr> <CR> pumvisible() ? "\<c-y>" : "\<CR>"
+
+"=========
 " Nvim-R
 "=========
 
@@ -136,6 +132,24 @@ let R_assign_map = '<M-->'
 " set some tag dir
 autocmd FileType r set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
 autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
+
+"=========
+" ALE
+"=========
+let g:ale_fixers = {'r': ['styler'], 'rmd': ['styler']}
+
+"===============
+" ncm2-ultiSnips
+"===============
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<Tab>"
+let g:UltiSnipsJumpBackwardTrigger	= "<S-Tab>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 "=============
 " vim-devtools
