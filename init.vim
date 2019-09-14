@@ -137,6 +137,8 @@ autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
 " ALE
 "=========
 let g:ale_fixers = {'r': ['styler'], 'rmd': ['styler']}
+" default rules for the r linting (see https://github.com/jimhesner/lintr#available-linters)
+let g:ale_r_lintr_options = 'with_defaults(line_length_linter(120))'
 
 "===============
 " ncm2-ultiSnips
@@ -145,7 +147,7 @@ let g:ale_fixers = {'r': ['styler'], 'rmd': ['styler']}
 " The parameters are the same as `:help feedkeys()`
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
-" c-j c-k for moving in snippet
+" <tab> to move to next placeholder in snippet
 let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
 let g:UltiSnipsJumpForwardTrigger	= "<Tab>"
 let g:UltiSnipsJumpBackwardTrigger	= "<S-Tab>"
