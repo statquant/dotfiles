@@ -12,8 +12,8 @@ set shortmess+=c
 "When using CTRL-C key to leave insert mode, it does not trigger the autocmd InsertLeave. You should use CTRL-[, or map the <c-c> to <ESC>.
 "inoremap <c-c> <ESC>
 "Use <TAB> to select the popup menu:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "If 'omnifunc' is the only available option, you may register it as a source for NCM.
 " css completion via `csscomplete#CompleteCSS`
 " The `'cm_refresh_patterns'` is PCRE.
@@ -100,26 +100,6 @@ let R_assign_map = '<M-->'
 autocmd VimEnter,FileType r,rmd vnoremap <LocalLeader>fr <Plug>RFormat
 " remove preview window in R
 autocmd VimEnter,FileType r,rmd set completeopt-=preview
-
-
-"==========================
-"====== R completion ======
-"==========================
-let g:deoplete#auto_complete_start_length = 1 
-let g:deoplete#enable_at_startup = 1 
-let g:deoplete#enable_smart_case = 1 
-call deoplete#custom#option('omni_patterns', { 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'] })
-
-autocmd VimEnter,FileType r,rmd imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>") 
-autocmd VimEnter,FileType r,rmd imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-autocmd VimEnter,FileType r,rmd imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\<Plug>AutoPairsReturn"
-
-set hidden
-let g:LanguageClient_serverCommands = {
-			\ 'r': ['R', '--quiet', '--slave', '-e', 'languageserver::run()'],
-			\ 'rmd': ['R', '--quiet', '--slave', '-e', 'languageserver::run()'],
-			\ }
-let g:LanguageClient_autoStart = 1
 
 "=======================
 "====== ShowMarks ======
