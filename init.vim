@@ -75,6 +75,12 @@ set hidden
 " navigate buffer
 nmap <c-S-left> :bprevious <CR>
 nmap <c-S-right> :bnext <CR>
+imap <c-S-left> <CR>:bprevious <CR>
+imap <c-S-right> <CR>:bnext <CR>
+nmap <LocalLeader><left> :bprevious <CR>
+nmap <LocalLeader><right> :bnext <CR>
+imap <LocalLeader><left> <CR>:bprevious <CR>
+imap <LocalLeader><right> <CR>:bnext <CR>
 
 " navigate window
 nnoremap <c-left> <c-w>h<esc>i
@@ -130,8 +136,8 @@ let R_rconsole_width = 0
 " classic <- shortcut
 let R_assign_map = '<M-->'
 " set some tag dir
-autocmd FileType r set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
-autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/base_pkg.ctags
+autocmd FileType r set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/
+autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/
 
 "=========
 " ALE
@@ -216,5 +222,6 @@ let cmdline_app           = {}
 "==========
 " jupytext
 " =========
-let g:jupytext_fmt = 'rmarkdown'
-let g:jupytext_filetype_map = {'rmarkdown': 'r'}
+let g:jupytext_fmt = 'R:spin'
+"let g:jupytext_fmt = 'rmarkdown'
+let g:jupytext_filetype_map = {'r': 'R'}

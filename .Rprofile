@@ -12,9 +12,9 @@ if (Sys.getenv("NVIMR_TMPDIR") == "") {
 # Lines added by the Vim-R-plugin command :RpluginConfig (2014-Feb-16 18:42):
 if (interactive()) {
   if (nchar(Sys.getenv("DISPLAY")) > 1) {
-    options(editor = 'gvim -f -c "set ft=r"')
+    options(editor = 'vim')
   } else {
-    options(editor = 'vim -c "set ft=r"')
+    options(editor = 'vim')
   }
   library(colorout)
   if (Sys.getenv("TERM") != "linux" && Sys.getenv("TERM") != "") {

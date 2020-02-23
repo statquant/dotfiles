@@ -17,7 +17,8 @@ if [ -f `which powerline-daemon` ]; then
 fi
 
 # add nvim
-export PATH=${HOME}/.local/share/nvim/:${PATH}
+# installed neovim through dnf
+# export PATH=${HOME}/.local/share/nvim/:${PATH}
 # add q
 export PATH=${HOME}/q/bin/:${PATH}
 # add user python

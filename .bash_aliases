@@ -3,6 +3,7 @@ alias r='${HOME}/CodeProjects/R/r_wrapper/r_wrapper.sh --no-save --no-restore-da
 #alias nvim='${HOME}/.local/share/nvim/nvim.appimage'
 alias vim='nvim'
 alias vimdiff='nvim -d'
+alias vi='/usr/bin/vim'
 # q has been added to PATH
 # alias q='/usr/bin/rlwrap ${HOME}/q/l32/q'
 alias ls='ls --color=auto'
