@@ -10,3 +10,5 @@ alias ls='ls --color=auto'
 alias ll='ls -lrthA'
 # read a pdf
 alias pdf='evince'
+# no nonsense R
+alias R='R --no-save --no-restore --quiet'

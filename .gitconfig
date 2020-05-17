@@ -1,8 +1,10 @@
 # This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
-	name = statquant
 	email = statquant@outlook.com
+	name = statquant
+# Please adapt and uncomment the following lines:
+#	name = statquant
+#	email = statquant@outlook.com
 [credential]
 	helper = cache --timeout=3600
 [alias]

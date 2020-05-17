@@ -1,5 +1,13 @@
 cat("Running .Rprofile\n")
 
+local({
+  repos <- c(CRAN = "https://cloud.r-project.org")
+  if (.Platform$OS.type == "windows") {
+     repos["CRANextra"] <- "https://www.stats.ox.ac.uk/pub/RWin"
+  }
+  options(repos = c(repos, getOption("repos")))
+})
+
 # 2017-07-02 from nvimr plugin
 if (Sys.getenv("NVIMR_TMPDIR") == "") {
   options(defaultPackages = c("utils", "grDevices", "graphics", "stats", "methods"))

@@ -3,53 +3,54 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " Assuming you're using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
-
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. 
+inoremap <expr> <CR> pumvisible() ? "\<c-y>" : "\<CR>"
 " Wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'roxma/nvim-yarp'
 Plug 'gaalcaras/ncm-R', {'for': ['r', 'rmd', 'rnoweb']}
-
 " R completion
 Plug 'jalvesaq/Nvim-R'
-" Better Rnoweb support (LaTeX completion)
-Plug 'lervag/vimtex'
 " ALE linter useful with R
 Plug 'w0rp/ale'
-"Plug '~/CodeProjects/vim/ale'
 " R devtools shortcuts
 Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
-
-"Plug '~/CodeProjects/vim/vim-snippets'
 " Snippets R
 Plug 'ncm2/ncm2-ultisnips'
 " Track the engine.
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-
 " Terminal for python, q, ...
 " Plug 'jalvesaq/vimcmdline'
 Plug '~/CodeProjects/vim/vimcmdline_fork'
-
 " Buffer explorer
 Plug 'fholgado/minibufexpl.vim'
-
 " Beautiful statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
 " Comments
 Plug 'scrooloose/nerdcommenter'
-
 " Nice utility to zoom on a buffer like in tmux ctrl A + z
 " Type Ctrl w + o to zoom in and out
 Plug 'troydm/zoomwintab.vim'
-
 " Vim plugin for editing Jupyter ipynb files via jupytext
 Plug 'goerz/jupytext.vim'
 
-" Initialize plugin system
 call plug#end()
 
 ">>>>>>>>>>>>>>>
@@ -138,6 +139,30 @@ let R_assign_map = '<M-->'
 " set some tag dir
 autocmd FileType r set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/
 autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/
+
+" function to convert R to Rmd using spin
+" I realized <LocalLeader>ks does the same thing but knit = TRUE is causing
+" issues
+function! R_To_Rmd()
+  let file = expand('%:p')
+  let command = "R --vanilla --quiet -e 'knitr::spin(\"" . file . "\", format = \"Rmd\", knit = FALSE)'"
+  execute "silent !" . command
+endfunction
+nmap <LocalLeader>sp :call R_To_Rmd() <CR>
+imap <LocalLeader>sp :call R_To_Rmd() <CR>
+
+" Function that runs jupytext and will create {R, Rmd, ipynb} triplet and sync
+" things out
+" Typically create any one of the 3 format, press <LocalLeader>ju to create
+" the other 2 then alternate across 3 files and update one or the other, press
+" <LocalLeader>ju to update the other 2
+function! Run_Jupytext()
+  let file = expand('%:p')
+  let command = "jupytext --set-formats R:spin,ipynb,Rmd --sync " . file
+  execute "silent !" . command
+endfunction
+nmap <LocalLeader>ju :call Run_Jupytext() <CR>
+imap <LocalLeader>ju :call Run_Jupytext() <CR>
 
 "=========
 " ALE

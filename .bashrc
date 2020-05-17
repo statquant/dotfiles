@@ -20,7 +20,9 @@ fi
 # installed neovim through dnf
 # export PATH=${HOME}/.local/share/nvim/:${PATH}
 # add q
-export PATH=${HOME}/q/bin/:${PATH}
+export QHOME=${HOME}/q
+export QBIN=${QHOME}/bin
+export PATH=${QBIN}:${PATH}
 # add user python
 export PATH=${HOME}/.local/bin/:${PATH}
 # add Scripts directory

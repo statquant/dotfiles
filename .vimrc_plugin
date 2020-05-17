@@ -1,33 +1,3 @@
-"=================
-" vim completion
-"=================
-
-" don't give |ins-completion-menu| messages.  For example '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
-set shortmess+=c
-"When the <Enter> key is pressed while the popup menu is visible, it only hides the menu. Use this mapping to hide the menu and also start a new line.
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-"Here is an example for expanding snippet in the popup menu with <Enter> key. Suppose you use the <C-U> key for expanding snippet.
-"imap <expr> <CR>  (pumvisible() ?  "\<c-y>\<Plug>(expand_or_nl)" : "\<CR>")
-"imap <expr> <Plug>(expand_or_nl) (cm#completed_is_snippet() ? "\<C-U>":"\<CR>")
-"When using CTRL-C key to leave insert mode, it does not trigger the autocmd InsertLeave. You should use CTRL-[, or map the <c-c> to <ESC>.
-"inoremap <c-c> <ESC>
-"Use <TAB> to select the popup menu:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"If 'omnifunc' is the only available option, you may register it as a source for NCM.
-" css completion via `csscomplete#CompleteCSS`
-" The `'cm_refresh_patterns'` is PCRE.
-" Be careful with `'scoping': 1` here, not all sources, especially omnifunc,
-" can handle this feature properly.
-"au User CmSetup call cm#register_source({'name' : 'cm-css',
-        "\ 'priority': 9,
-        "\ 'scoping': 1,
-        "\ 'scopes': ['css','scss'],
-        "\ 'abbreviation': 'css',
-        "\ 'word_pattern': '[\w\-]+',
-        "\ 'cm_refresh_patterns':['[\w\-]+\s*:\s+'],
-        "\ 'cm_refresh': {'omnifunc': 'csscomplete#CompleteCSS'},
-        "\ })
 "=============================
 "=========== CTRLP ===========
 "=============================
@@ -105,21 +75,21 @@ autocmd VimEnter,FileType r,rmd set completeopt-=preview
 "==========================
 "====== R completion ======
 "==========================
-let g:deoplete#auto_complete_start_length = 1 
-let g:deoplete#enable_at_startup = 1 
-let g:deoplete#enable_smart_case = 1 
-call deoplete#custom#option('omni_patterns', { 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'] })
+"let g:deoplete#enable_at_startup = 1 
+"let g:deoplete#auto_complete_start_length = 1 
+"let g:deoplete#enable_smart_case = 1 
+"call deoplete#custom#option('omni_patterns', { 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'] })
 
-autocmd VimEnter,FileType r,rmd imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>") 
-autocmd VimEnter,FileType r,rmd imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-autocmd VimEnter,FileType r,rmd imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\<Plug>AutoPairsReturn"
+"autocmd VimEnter,FileType r,rmd imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>") 
+"autocmd VimEnter,FileType r,rmd imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+"autocmd VimEnter,FileType r,rmd imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
 
-set hidden
-let g:LanguageClient_serverCommands = {
-			\ 'r': ['R', '--quiet', '--slave', '-e', 'languageserver::run()'],
-			\ 'rmd': ['R', '--quiet', '--slave', '-e', 'languageserver::run()'],
-			\ }
-let g:LanguageClient_autoStart = 1
+"set hidden
+"let g:LanguageClient_serverCommands = {
+"			\ 'r': ['R', '--quiet', '--slave', '-e', 'languageserver::run()'],
+"			\ 'rmd': ['R', '--quiet', '--slave', '-e', 'languageserver::run()'],
+"			\ }
+"let g:LanguageClient_autoStart = 1
 
 "=======================
 "====== ShowMarks ======
