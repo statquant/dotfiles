@@ -129,6 +129,8 @@ inoremap <expr> <CR> pumvisible() ? "\<c-y>" : "\<CR>"
 " Nvim-R
 "=========
 
+" use R quietly
+let R_args = ['--no-save', '--quiet']
 " send R selection
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
@@ -163,6 +165,14 @@ function! Run_Jupytext()
 endfunction
 nmap <LocalLeader>ju :call Run_Jupytext() <CR>
 imap <LocalLeader>ju :call Run_Jupytext() <CR>
+
+function! R_Render()
+  let file = expand('%:p')
+  let command = "R --vanilla --quiet -e 'rmarkdown::render(input = \"" . file . "\")'"
+  execute "!" . command
+endfunction
+nmap <LocalLeader>rr :call R_Render() <CR>
+imap <LocalLeader>rr :call R_Render() <CR>
 
 "=========
 " ALE
@@ -242,7 +252,8 @@ let cmdline_map_source_fun     = '<LocalLeader>f'
 let cmdline_map_send_paragraph = '<LocalLeader>p'
 let cmdline_map_send_block     = '<LocalLeader>b'
 let cmdline_map_quit           = '<LocalLeader>rq'
-let cmdline_app           = {}
+let cmdline_app                = {}
+let cmdline_app['kdb']         = 'rlwrap -r q'
 
 "==========
 " jupytext

@@ -66,6 +66,7 @@ set colorcolumn=100 " print red column at column 100
 set nobackup " no backup
 set noswapfile " no swap
 set nowritebackup
+set autoread " automaticaly load files edited outside vim
 
 "---------------------------------------------------------------
 " META KEYS
@@ -126,7 +127,7 @@ set term=xterm-256color
 set t_ut=
 autocmd BufEnter,FileType *
                 \ if &ft ==# 'c' || &ft ==# 'cpp' || &ft ==# 'vim'| colors elflord |
-                \ elseif &ft ==? 'r' | colors molokai |
+                \ elseif &ft ==? 'r' || &ft ==? 'rmd' | colors molokai |
                 \ else | colors desert |
                 \ endif
 
