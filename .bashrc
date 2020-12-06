@@ -42,10 +42,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# add q
-# 20200522 I installed q via conda when installing jupyterq and it seems that QHOME is automagically set to /home/statquant/miniconda3/q
-#export MINICONDA_HOME=/home/statquant/miniconda3/
-#export QBIN=
-#export QHOME=
-#export PATH=${QHOME}:${QBIN}:${PATH}

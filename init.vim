@@ -97,10 +97,6 @@ tmap <c-right> <esc><c-w>l<esc>i
 tmap <c-up> <esc><c-w>k<esc>i
 tmap <c-down> <esc><c-w>j<esc>i
 
-" come back to previous position
-" nnoremap <c-[> <c-t>
-" inoremap <c-[> <c-t>
-
 ">>>>>>>>>>>>>>
 " plugins
 ">>>>>>>>>>>>>>

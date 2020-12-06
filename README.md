@@ -7,6 +7,7 @@
 # Bash
 # Tmux
 # R
++ Nvim-R is a filetype plugin
 # Tilix
 
 Save tilix conf
