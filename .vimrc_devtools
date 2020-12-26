@@ -1,0 +1,37 @@
+"---------------------------------------------------------------
+" VIM DEVTOOLS
+"---------------------------------------------------------------
+"RBuildPackage <dir>: Runs devtools::build.
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zb <esc>:RBuildPackage<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zb <esc>:RBuildPackage<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zb <esc>:RBuildPackage<CR>i
+"RLoadPackage <dir>: Runs devtools::load_all.
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
+"RUnloadPackage <dir>: Runs devtools::unload.
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>i
+"RDocumentPackage <dir>: Runs devtools::document
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
+"RCheckPackage <dir>: Runs devtools::check.
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zc <esc>:RCheckPackage<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zc <esc>:RCheckPackage<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zc <esc>:RCheckPackage<CR>i
+"RTestPackage <dir> <filter>: Runs devtools::test using specified filter (default '').
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zt <esc>:RTestPackage<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zt <esc>:RTestPackage<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zt <esc>:RTestPackage<CR>i
+"RMakePackage <dir>: Runs devtools::document, then devtools::install.
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>zm <esc>:RMake<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>zm <esc>:RMake<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>zm <esc>:RMake<CR>i
+"RBuildPackgeTags <dir>: Builds a tag file for the package and stores it in g:devtools_rtags_dir (default is "~/.rtags"). 
+"All tag files in this directory will automatically added to &tags for file types r, rnoweb and rmd.
+autocmd VimEnter,FileType r,rmd inoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
+autocmd VimEnter,FileType r,rmd nnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>
+autocmd VimEnter,FileType r,rmd tnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
+

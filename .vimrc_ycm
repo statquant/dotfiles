@@ -1,0 +1,8 @@
+let g:ycm_language_server = 
+  \ [ 
+  \   {
+  \     'name': 'rstudio',
+  \     'cmdline': [ 'R', '--slave', '-e', 'languageserver::run()' ],
+  \     'filetypes': [ 'r' ]
+  \   }
+  \ ]

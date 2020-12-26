@@ -1,0 +1,48 @@
+"---------------------------------------------------------------
+" NVIMR
+"---------------------------------------------------------------
+" use R quietly
+let R_args = ['--no-save', '--quiet']
+" send R selection
+vmap <Space> <Plug>RDSendSelection
+nmap <Space> <Plug>RDSendLine
+" split horizontally
+let R_rconsole_width = 0
+" classic <- shortcut
+let R_assign_map = '<M-->'
+" set some tag dir
+autocmd FileType r set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/
+autocmd FileType rnoweb set tags+=~/.cache/Nvim-R/Rtags,~/.rtags/
+
+" function to convert R to Rmd using spin
+" I realized <LocalLeader>ks does the same thing but knit = TRUE is causing
+" issues
+function! R_To_Rmd()
+  let file = expand('%:p')
+  let command = "R --vanilla --quiet -e 'knitr::spin(\"" . file . "\", format = \"Rmd\", knit = FALSE)'"
+  execute "silent !" . command
+endfunction
+nmap <LocalLeader>sp :call R_To_Rmd() <CR>
+imap <LocalLeader>sp :call R_To_Rmd() <CR>
+
+" Function that runs jupytext and will create {R, Rmd, ipynb} triplet and sync
+" things out
+" Typically create any one of the 3 format, press <LocalLeader>ju to create
+" the other 2 then alternate across 3 files and update one or the other, press
+" <LocalLeader>ju to update the other 2
+function! Run_Jupytext()
+  let file = expand('%:p')
+  let command = "jupytext --set-formats R:spin,ipynb,Rmd --sync " . file
+  execute "silent !" . command
+endfunction
+nmap <LocalLeader>ju :call Run_Jupytext() <CR>
+imap <LocalLeader>ju :call Run_Jupytext() <CR>
+
+function! R_Render()
+  let file = expand('%:p')
+  let command = "R --vanilla --quiet -e 'rmarkdown::render(input = \"" . file . "\")'"
+  execute "!" . command
+endfunction
+nmap <LocalLeader>rr :call R_Render() <CR>
+imap <LocalLeader>rr :call R_Render() <CR>
+

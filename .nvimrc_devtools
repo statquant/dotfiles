@@ -1,0 +1,36 @@
+"---------------------------------------------------------------
+" DEVTOOLS
+"---------------------------------------------------------------
+"RBuildPackage <dir>: Runs devtools::build.
+inoremap <LocalLeader>zb <esc>:RBuildPackage<CR>i
+nnoremap <LocalLeader>zb <esc>:RBuildPackage<CR>
+tnoremap <LocalLeader>zb <esc>:RBuildPackage<CR>i
+"RLoadPackage <dir>: Runs devtools::load_all.
+inoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
+nnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>
+tnoremap <LocalLeader>zl <esc>:RLoadPackage<CR>i
+"RUnloadPackage <dir>: Runs devtools::unload.
+inoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>i
+nnoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>
+tnoremap <LocalLeader>zu <esc>:RUnloadPackage<CR>i
+"RDocumentPackage <dir>: Runs devtools::document
+inoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
+nnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>
+tnoremap <LocalLeader>zd <esc>:RDocumentPackage<CR>i
+"RCheckPackage <dir>: Runs devtools::check.
+inoremap <LocalLeader>zc <esc>:RCheckPackage<CR>i
+nnoremap <LocalLeader>zc <esc>:RCheckPackage<CR>
+tnoremap <LocalLeader>zc <esc>:RCheckPackage<CR>i
+"RTestPackage <dir> <filter>: Runs devtools::test using specified filter (default '').
+inoremap <LocalLeader>zt <esc>:RTestPackage<CR>i
+nnoremap <LocalLeader>zt <esc>:RTestPackage<CR>
+tnoremap <LocalLeader>zt <esc>:RTestPackage<CR>i
+"RMakePackage <dir>: Runs devtools::document, then devtools::install.
+inoremap <LocalLeader>zz <esc>:RMake<CR>i
+nnoremap <LocalLeader>zz <esc>:RMake<CR>
+tnoremap <LocalLeader>zz <esc>:RMake<CR>i
+"RBuildPackgeTags <dir>: Builds a tag file for the package and stores it in g:devtools_rtags_dir (default is "~/.rtags"). All tag files in this directory will automatically added to &tags for file types r, rnoweb and rmd.
+inoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
+nnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>
+tnoremap <LocalLeader>z] <esc>:RBuildPackageTags<CR>i
+

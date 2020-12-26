@@ -1,0 +1,43 @@
+"---------------------------------------------------------------
+" BASE
+"---------------------------------------------------------------
+" tab behaviour
+" smarttab is the width of a hard tabstop measured in "spaces" effectively the (maximum) width of an actual tab character.
+set tabstop=8 
+" Setting tabstop to a non-zero value other than tabstop will make the tab key (in insert mode) insert a combination of spaces (and possibly tabs) to simulate tab stops at this width.
+set softtabstop=0 
+" Enabling softtabstop this will make the tab key (in insert mode) insert spaces instead of tab characters. This also affects the behavior of the retab command.
+set expandtab 
+" shiftwidth is the size of an "indent". It's also measured in spaces, so if your code base indents with tab characters then you want shiftwidth to equal the number of tab characters times tabstop.
+" This is also used by things like the =, > and < commands.
+set shiftwidth=4 
+" Enabling smarttab this will make the tab key (in insert mode) insert spaces or tabs to go to the next indent of the next tabstop when the cursor is at the beginning of a line (i.e. the only preceding characters are whitespace).
+set smarttab
+
+" change buffer without saving
+set hidden
+
+" navigate buffer
+nmap <c-S-left> :bprevious <CR>
+nmap <c-S-right> :bnext <CR>
+imap <c-S-left> <CR>:bprevious <CR>
+imap <c-S-right> <CR>:bnext <CR>
+nmap <LocalLeader><left> :bprevious <CR>
+nmap <LocalLeader><right> :bnext <CR>
+imap <LocalLeader><left> <CR>:bprevious <CR>
+imap <LocalLeader><right> <CR>:bnext <CR>
+
+" navigate window
+nnoremap <c-left> <c-w>h<esc>i
+nnoremap <c-right> <c-w>l<esc>i
+nnoremap <c-up> <c-w>k<esc>i
+nnoremap <c-down> <c-w>j<esc>i
+inoremap <c-left> <esc><c-w>h<esc>i
+inoremap <c-right> <esc><c-w>l<esc>i
+inoremap <c-up> <esc><c-w>k<esc>i
+inoremap <c-down> <esc><c-w>j<esc>i
+tmap <c-left> <esc><c-w>h<esc>i
+tmap <c-right> <esc><c-w>l<esc>i
+tmap <c-up> <esc><c-w>k<esc>i
+tmap <c-down> <esc><c-w>j<esc>i
+

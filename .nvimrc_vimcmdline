@@ -1,0 +1,13 @@
+"---------------------------------------------------------------
+" VIMCMDLINE
+"---------------------------------------------------------------
+" mappings
+let cmdline_map_start          = '<LocalLeader>rf'
+let cmdline_map_send           = '<Space>'
+let cmdline_map_send_and_stay  = '<LocalLeader><Space>'
+let cmdline_map_source_fun     = '<LocalLeader>f'
+let cmdline_map_send_paragraph = '<LocalLeader>p'
+let cmdline_map_send_block     = '<LocalLeader>b'
+let cmdline_map_quit           = '<LocalLeader>rq'
+let cmdline_app                = {}
+let cmdline_app['kdb']         = 'rlwrap -r q'
