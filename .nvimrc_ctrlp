@@ -1,0 +1,22 @@
+"---------------------------------------------------------------
+" CTRLP
+"---------------------------------------------------------------
+"Use this option to change the mapping to invoke CtrlP in |Normal| mode
+let g:ctrlp_map = '<c-p>'
+"Set the default opening command to use when pressing the above mapping
+let g:ctrlp_cmd = 'CtrlPMixed'
+"searching by filename (as opposed to full path)
+let g:ctrlp_by_filename = 0 "in {0,1}
+"When opening a file, if it's already open in a window somewhere, CtrlP will try
+" to jump to it instead of opening a new instance
+let g:ctrlp_switch_buffer = 'E'
+"Set the directory to store the cache files
+"let g:ctrlp_cache_dir = ''
+"Specify the number of recently opened files you want CtrlP to remember: >
+let g:ctrlp_mruf_max = 250
+"2016-07-30 Added speedup
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+

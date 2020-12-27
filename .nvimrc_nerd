@@ -1,0 +1,8 @@
+"---------------------------------------------------------------
+" NERDTREE
+"---------------------------------------------------------------
+noremap <F1> :NERDTreeToggle<CR>
+" Tell the NERD tree not to ignore any files
+let NERDTreeIgnore=[]
+let NERDTreeShowHidden=1
+

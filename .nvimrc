@@ -1,26 +1,40 @@
-"---------------------------------------------------------------
-" VIMPLUG
-"---------------------------------------------------------------
 " Specify a directory for plugins
-call plug#begin("/tmp/vim_r_completion/.nvim/plugged")
+" At the time of writing vim-plug must be install doing 
+" bash) curl -fLo ~/.nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin("~/.nvim/plugged")
 " The basics: https://github.com/tpope/vim-sensible
 Plug 'tpope/vim-sensible'
-source ~/.dotfiles/.nvimrc_base
 " Nvim-R: https://github.com/jalvesaq/Nvim-R
 Plug 'jalvesaq/Nvim-R', {'branch': 'stable', 'for': ['r', 'R', 'rmd', 'Rmd']} 
-source ~/.dotfiles/.nvimrc_nvimr
 " Conquer of completion: https://github.com/neoclide/coc.nvim
 " Install coc-r-lsp: https://github.com/neoclide/coc-r-lsp
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['vim', 'r', 'R', 'rmd', 'Rmd'], 'do': ':CocInstall coc-r-lsp coc-snippets'}
-source ~/.dotfiles/.nvimrc_coc
+" R devtools shortcuts: https://github.com/mllg/vim-devtools-plugin
+Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
+" Send lines to interpreter: https://github.com/jalvesaq/vimcmdline
+Plug 'jalvesaq/vimcmdline'
 " Patched fonts for Powerline: https://github.com/powerline/fonts
 Plug 'powerline/fonts', {'do': './install.sh'}
 " Lean & mean status/tabline for vim: https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-source ~/.dotfiles/.nvimrc_airline
-" one colorscheme pack to rule them all: https://github.com/flazz/vim-colorschemes
+" Colorscheme pack: https://github.com/flazz/vim-colorschemes
 Plug 'flazz/vim-colorschemes'
 " Done for all plugins
 call plug#end()
 
+" configuration needs to be after plug#end because rtp is not set within
+" #begin/#end
+source ~/.dotfiles/.nvimrc_base
+source ~/.dotfiles/.nvimrc_nvimr
+source ~/.dotfiles/.nvimrc_coc
+source ~/.dotfiles/.nvimrc_devtools
+source ~/.dotfiles/.nvimrc_vimcmdline
+source ~/.dotfiles/.nvimrc_airline
+source ~/.dotfiles/.nvimrc_colorscheme
+ 
+" unused plugin configurations 
+if false 
+	source ~/.dotfiles/.nvimrc_nerd
+	source ~/.dotfiles/.nvimrc_ctrlp
+endif

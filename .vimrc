@@ -1,50 +1,42 @@
 " Specify a directory for plugins
+" At the time of writing vim-plug must be install doing 
+" bash) curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin('~/.vim/plugged')
-" Explore dirs
-Plug 'scrooloose/nerdtree'
-" Comment the shit out of it
-Plug 'scrooloose/nerdcommenter'
-" R devtools shortcuts
+" The basics: https://github.com/tpope/vim-sensible
+Plug 'tpope/vim-sensible'
+" Nvim-R: https://github.com/jalvesaq/Nvim-R
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable', 'for': ['r', 'R', 'rmd', 'Rmd']} 
+" Conquer of completion: https://github.com/neoclide/coc.nvim
+" Install coc-r-lsp: https://github.com/neoclide/coc-r-lsp
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['vim', 'r', 'R', 'rmd', 'Rmd'], 'do': ':CocInstall coc-r-lsp coc-snippets'}
+" R devtools shortcuts: https://github.com/mllg/vim-devtools-plugin
 Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
-" R power
-Plug 'jalvesaq/Nvim-R', { 'for': ['r', 'rmd', 'rnoweb']}
-" Elegant buffer explorer - takes very little screen space http://fholgado.com/minibufexpl 
-Plug 'fholgado/minibufexpl.vim'
-" Full path fuzzy file, buffer, mru, tag, ... finder for Vim. 
-Plug 'ctrlpvim/ctrlp.vim'
-" Patched fonts for Powerline users (need to run ./install.sh on installation) 
-Plug 'powerline/fonts'
-" Lean & mean status/tabline for vim that's light as air 
+" Send lines to interpreter: https://github.com/jalvesaq/vimcmdline
+Plug 'jalvesaq/vimcmdline'
+" Patched fonts for Powerline: https://github.com/powerline/fonts
+Plug 'powerline/fonts', {'do': './install.sh'}
+" Lean & mean status/tabline for vim: https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" one colorscheme pack to rule them all! 
+" File system explorer: https://github.com/preservim/nerdtree
+Plug 'preservim/nerdtree'
+" Comment any filetype: https://github.com/preservim/nerdcommenter
+Plug 'preservim/nerdcommenter'
+" Fuzzy file finder: https://github.com/ctrlpvim/ctrlp.vim
+Plug 'ctrlpvim/ctrlp.vim'
+" Colorscheme pack: https://github.com/flazz/vim-colorschemes
 Plug 'flazz/vim-colorschemes'
-" Another theme
-Plug 'altercation/vim-colors-solarized'
-" Send lines to interpreter 
-Plug 'jalvesaq/vimcmdline'
- 
-" 2020-12-13 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" 2020-12-13 
-" Does not seem to work out pf the box
-" Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
-"Plug 'autozimu/LanguageClient-neovim', {
-"    \ 'branch': 'next',
-"    \ 'do': 'bash install.sh',
-"    \ }
- 
 " Done for all plugins
 call plug#end()
 
-" source configuation files
-source ~/.vimrc_base
-source ~/.vimrc_coc
-source ~/.vimrc_ctrlp
-source ~/.vimrc_mbe
-source ~/.vimrc_nvimr
-source ~/.vimrc_nerd
-source ~/.vimrc_devtools
-"source ~/.vimrc_ycm
-"source ~/.vimrc_lcn
-
+" configuration needs to be after plug#end because rtp is not set within
+" #begin/#end
+source ~/.dotfiles/.vimrc_base
+source ~/.dotfiles/.vimrc_nvimr
+source ~/.dotfiles/.vimrc_coc
+source ~/.dotfiles/.vimrc_devtools
+source ~/.dotfiles/.nvimrc_vimcmdline
+source ~/.dotfiles/.vimrc_airline
+source ~/.dotfiles/.vimrc_nerd
+source ~/.dotfiles/.vimrc_ctrlp
+source ~/.dotfiles/.vimrc_colorscheme

@@ -18,14 +18,10 @@ set smarttab
 set hidden
 
 " navigate buffer
-nmap <c-S-left> :bprevious <CR>
-nmap <c-S-right> :bnext <CR>
-imap <c-S-left> <CR>:bprevious <CR>
-imap <c-S-right> <CR>:bnext <CR>
-nmap <LocalLeader><left> :bprevious <CR>
-nmap <LocalLeader><right> :bnext <CR>
-imap <LocalLeader><left> <CR>:bprevious <CR>
-imap <LocalLeader><right> <CR>:bnext <CR>
+nnoremap <c-S-left> :bprevious <CR>
+nnoremap <c-S-right> :bnext <CR>
+inoremap <c-S-left> <Esc>:bprevious<CR>i
+inoremap <c-S-right> <Esc>:bnext<CR>i
 
 " navigate window
 nnoremap <c-left> <c-w>h<esc>i

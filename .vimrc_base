@@ -118,7 +118,6 @@ nmap <silent> /# :nohlsearch<CR>
 set term=xterm-256color
 " fix background problem http://superuser.com/questions/399296/256-color-support-for-vim-background-in-tmux
 set t_ut=
-colors Monokai
 
 "---------------------------------------------------------------
 " STATUS LINE LOGIC => 2016-04-19 DEPRECATED CAUSE VIMAIRLINE

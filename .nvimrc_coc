@@ -1,3 +1,9 @@
+" 2020-12-13 
+" Problem I have in R is that completion is done after comma and not ,<space> so the linting 
+" is always roblematic
+" 2020-12-28 
+" Many configurations are still to be checked on https://github.com/neoclide/coc.nvim#example-vim-configuration
+
 "---------------------------------------------------------------
 " COC
 "---------------------------------------------------------------
@@ -20,12 +26,9 @@ endfunction
 autocmd Filetype r inoremap <silent><expr> <cr> 
 			\ pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-autocmd Filetype r inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
+" Move prev/next in snippets
+" This seems to be working in R without adding additional configuration
+" (typically inoremap <silent><expr> <TAB>)
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
 
