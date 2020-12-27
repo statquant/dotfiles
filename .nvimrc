@@ -34,7 +34,7 @@ source ~/.dotfiles/.nvimrc_airline
 source ~/.dotfiles/.nvimrc_colorscheme
  
 " unused plugin configurations 
-if false 
+if 0 
 	source ~/.dotfiles/.nvimrc_nerd
 	source ~/.dotfiles/.nvimrc_ctrlp
 endif
