@@ -26,6 +26,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim'
 " Colorscheme pack: https://github.com/flazz/vim-colorschemes
 Plug 'flazz/vim-colorschemes'
+Plug 'katusk/vim-qkdb-syntax'
 " Done for all plugins
 call plug#end()
 
