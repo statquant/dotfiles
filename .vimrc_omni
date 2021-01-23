@@ -1,0 +1,14 @@
+autocmd Filetype r call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+			\ 'name': 'omni',
+			\ 'allowlist': ['r','rmd','R','Rmd'],
+			\ 'blocklist': ['cpp','c','py','q','kdb'],
+			\ 'completor': function('asyncomplete#sources#omni#completor'),
+			\ 'triggers': { "r": ["(", ", ", "$", "::", ":::"] },
+			\ 'config': {
+			\   'show_source_kind': 1
+			\ }
+			\ }))
+
+autocmd Filetype r inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>" 
+autocmd Filetype r inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>" 
+autocmd Filetype r inoremap <expr> <CR>    pumvisible() ? asyncomplete#close_popup() : "\<CR>" 
