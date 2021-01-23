@@ -35,11 +35,6 @@ set ttimeoutlen=0
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-"--------------------------------------------------------------
-" TERMINAL MODE LOGIC
-"--------------------------------------------------------------
-tnoremap <Esc> <C-\><C-n> 
-
 "---------------------------------------------------------------
 " INDENTATION LOGIC
 " http://www.vim.org/scripts/script.php?script_id=231
@@ -86,20 +81,39 @@ set autoread " automaticaly load files edited outside vim
 "---------------------------------------------------------------
 " BUFFER LOGIC
 "---------------------------------------------------------------
-nmap <c-S-left> :bprevious <CR>
-nmap <c-S-right> :bnext <CR>
+" circulate buffers in normal mode
+nmap <C-S-Left> :bprevious <CR>
+nmap <C-S-Right> :bnext <CR>
+" circulate buffers in insert mode
+imap <C-S-Left> <Esc>:bprevious <CR>i
+imap <C-S-Right> <Esc>:bnext <CR>i
+
+"--------------------------------------------------------------
+" TERMINAL MODE LOGIC
+"--------------------------------------------------------------
+" I use <Esc><Esc> because just using <Esc> causes arrow keys to be useless in window logic
+tmap <Esc><Esc> <C-\><C-n> 
 
 "---------------------------------------------------------------
 " WINDOW LOGIC
 "---------------------------------------------------------------
-map <c-left> <c-w>h
-map <c-right> <c-w>l
-map <c-up> <c-w>k
-map <c-down> <c-w>j
-imap <c-left> <c-w>h
-imap <c-right> <c-w>l
-imap <c-up> <c-w>k
-imap <c-down> <c-w>j
+" circulate windows in normal mode
+nmap <C-Left> <C-w>h
+nmap <C-Right> <C-w>l
+nmap <C-Up> <C-w>k
+nmap <C-Down> <C-w>j
+" circulate windows in insert mode
+imap <C-Left> <Esc><C-w>hi
+imap <C-Right> <Esc><C-w>li
+imap <C-Up> <Esc><C-w>ki
+imap <C-Down> <Esc><C-w>ji
+" circulate from terminal to other windows
+" you cannot have <C-\><C-n> mapped to <Esc> as typing arrow keys results in a sequence that starts 
+" with Esc
+tmap <C-Left> <C-\><C-n><C-w>hi
+tmap <C-Right> <C-\><C-n><C-w>li
+tmap <C-Up> <C-\><C-n><C-w>ki
+tmap <C-Down> <C-\><C-n><C-w>ji
 
 "---------------------------------------------------------------
 " SEARCH LOGIC
