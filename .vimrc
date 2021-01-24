@@ -13,7 +13,8 @@ Plug 'yami-beta/asyncomplete-omni.vim', { 'for': ['r', 'rmd', 'rnoweb']}
 " R devtools shortcuts: https://github.com/mllg/vim-devtools-plugin
 Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
 " Send lines to interpreter: https://github.com/jalvesaq/vimcmdline
-Plug 'jalvesaq/vimcmdline'
+"Plug 'jalvesaq/vimcmdline'
+Plug 'statquant/vimcmdline'
 " Patched fonts for Powerline: https://github.com/powerline/fonts
 Plug 'powerline/fonts', {'do': './install.sh'}
 " Lean & mean status/tabline for vim: https://github.com/vim-airline/vim-airline
@@ -28,7 +29,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Colorscheme pack: https://github.com/flazz/vim-colorschemes
 Plug 'flazz/vim-colorschemes'
 " Syntaxic colors for kdb/q
-Plug 'katusk/vim-qkdb-syntax', { 'for': ['q', 'kdb']}
+" Plug 'katusk/vim-qkdb-syntax', { 'for': ['q', 'kdb']}
+Plug 'statquant/vim-qkdb-syntax', { 'for': ['q', 'kdb']}
 " Done for all plugins
 call plug#end()
 
