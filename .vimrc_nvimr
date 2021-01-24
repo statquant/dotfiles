@@ -8,6 +8,8 @@ let R_rconsole_width = 0
 " classic <- shortcut
 set <M-->=-
 let R_assign_map = '<M-->'
+" still use tmux to run R (as opposed to terminal)
+let R_source = '~/.vim/plugged/Nvim-R/R/tmux_split.vim'
 " define several ways of sending lines
 nmap <Space> <Plug>RDSendLine
 vmap <Space> <Plug>RDSendSelection
