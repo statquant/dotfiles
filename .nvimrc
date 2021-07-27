@@ -1,7 +1,8 @@
 " Specify a directory for plugins
 " At the time of writing vim-plug must be install doing 
-" bash) curl -fLo ~/.nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-call plug#begin("~/.nvim/plugged")
+" bash) curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" You cannot use ${XDG_CONFIG_HOME} in place of ~/.config
+call plug#begin("~/.config/nvim/plugged")
 " The basics: https://github.com/tpope/vim-sensible
 Plug 'tpope/vim-sensible'
 " Nvim-R: https://github.com/jalvesaq/Nvim-R
@@ -25,16 +26,16 @@ call plug#end()
 
 " configuration needs to be after plug#end because rtp is not set within
 " #begin/#end
-source ~/.dotfiles/.nvimrc_base
-source ~/.dotfiles/.nvimrc_nvimr
-source ~/.dotfiles/.nvimrc_coc
-source ~/.dotfiles/.nvimrc_devtools
-source ~/.dotfiles/.nvimrc_vimcmdline
-source ~/.dotfiles/.nvimrc_airline
-source ~/.dotfiles/.nvimrc_colorscheme
+source ~/dotfiles/.nvimrc_base
+source ~/dotfiles/.nvimrc_nvimr
+source ~/dotfiles/.nvimrc_coc
+source ~/dotfiles/.nvimrc_devtools
+source ~/dotfiles/.nvimrc_vimcmdline
+source ~/dotfiles/.nvimrc_airline
+source ~/dotfiles/.nvimrc_colorscheme
  
 " unused plugin configurations 
 if 0 
-	source ~/.dotfiles/.nvimrc_nerd
-	source ~/.dotfiles/.nvimrc_ctrlp
+	source ~/dotfiles/.nvimrc_nerd
+	source ~/dotfiles/.nvimrc_ctrlp
 endif

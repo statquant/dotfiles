@@ -9,5 +9,5 @@ alias pdf='evince'
 # no nonsense R
 alias R='R --no-save --no-restore --quiet'
 # link r to radian
-alias r="radian"
+alias r='radian'
 

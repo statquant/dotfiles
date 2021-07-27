@@ -1,3 +1,25 @@
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+	for rc in ~/.bashrc.d/*; do
+		if [ -f "$rc" ]; then
+			. "$rc"
+		fi
+	done
+fi
+unset rc
+
 if [ -f "$HOME/.bash_aliases" ] ; then
   source $HOME/.bash_aliases
 fi
@@ -6,6 +28,9 @@ fi
 if [ -f "$HOME/.fzf.bash" ] ; then 
   source ~/.fzf.bash
 fi
+
+# useful for powerline, nvim, ...
+export XDG_CONFIG_HOME=${HOME}/.config
 
 # 20190825
 # https://fedoramagazine.org/add-power-terminal-powerline/
@@ -19,9 +44,6 @@ fi
 # add nvim
 # installed neovim through dnf
 # export PATH=${HOME}/.local/share/nvim/:${PATH}
-
-# add user python
-export PATH=${HOME}/.local/bin/:${PATH}
 
 # add Scripts directory
 export PATH=${HOME}/Scripts/:${PATH}

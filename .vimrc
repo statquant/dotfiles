@@ -13,8 +13,7 @@ Plug 'yami-beta/asyncomplete-omni.vim', { 'for': ['r', 'rmd', 'rnoweb']}
 " R devtools shortcuts: https://github.com/mllg/vim-devtools-plugin
 Plug 'mllg/vim-devtools-plugin', { 'for': ['r', 'rmd', 'rnoweb']}
 " Send lines to interpreter: https://github.com/jalvesaq/vimcmdline
-"Plug 'jalvesaq/vimcmdline'
-Plug 'statquant/vimcmdline'
+Plug 'jalvesaq/vimcmdline'
 " Patched fonts for Powerline: https://github.com/powerline/fonts
 Plug 'powerline/fonts', {'do': './install.sh'}
 " Lean & mean status/tabline for vim: https://github.com/vim-airline/vim-airline
@@ -31,20 +30,22 @@ Plug 'flazz/vim-colorschemes'
 " Syntaxic colors for kdb/q
 " Plug 'katusk/vim-qkdb-syntax', { 'for': ['q', 'kdb']}
 Plug 'statquant/vim-qkdb-syntax', { 'for': ['q', 'kdb']}
+" Git in vim: https://github.com/tpope/vim-fugitive
+Plug 'tpope/vim-fugitive'
 " Done for all plugins
 call plug#end()
 
 " configuration needs to be after plug#end because rtp is not set within
 " #begin/#end
-source ~/.dotfiles/.vimrc_base
-source ~/.dotfiles/.vimrc_nvimr
-source ~/.dotfiles/.vimrc_omni
-source ~/.dotfiles/.vimrc_devtools
-source ~/.dotfiles/.nvimrc_vimcmdline
-source ~/.dotfiles/.vimrc_airline
-source ~/.dotfiles/.vimrc_nerd
-source ~/.dotfiles/.vimrc_ctrlp
-source ~/.dotfiles/.vimrc_colorscheme
+source ~/dotfiles/.vimrc_base
+source ~/dotfiles/.vimrc_nvimr
+source ~/dotfiles/.vimrc_omni
+source ~/dotfiles/.vimrc_devtools
+source ~/dotfiles/.nvimrc_vimcmdline
+source ~/dotfiles/.vimrc_airline
+source ~/dotfiles/.vimrc_nerd
+source ~/dotfiles/.vimrc_ctrlp
+source ~/dotfiles/.vimrc_colorscheme
 
 "2021-01-23 removing coc-r until I find how to trigger completion on ,<space>
 if 0
@@ -53,5 +54,5 @@ if 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release', 
 				\ 'for': ['vim', 'r', 'R', 'rmd', 'Rmd'], 
 				\ 'do': ':CocInstall coc-r-lsp coc-snippets'}
-	source ~/.dotfiles/.vimrc_coc
+	source ~/dotfiles/.vimrc_coc
 endif

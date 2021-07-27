@@ -5,5 +5,7 @@
 let g:airline_powerline_fonts = 1
 " Use the tabline (integrated in vim-airline) to show buffers on top
 let g:airline#extensions#tabline#enabled = 1
+" Use the branch info
+let g:airline#extensions#branch#enabled = 1
 
 
