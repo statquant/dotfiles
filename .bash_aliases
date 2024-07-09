@@ -1,4 +1,3 @@
-alias r='${HOME}/CodeProjects/R/r_wrapper/r_wrapper.sh --no-save --no-restore-data'
 # nvim has been added to PATH
 # wrap q with rlwrap
 alias q='rlwrap -r q'
@@ -10,4 +9,7 @@ alias pdf='evince'
 alias R='R --no-save --no-restore --quiet'
 # link r to radian
 alias r='radian'
+# link vim to nvim
+alias vim='nvim'
+alias vi='nvim'
 

@@ -1,10 +1,9 @@
 cat(sprintf("This is %s PID %s\n", R.version.string, Sys.getpid()))
 cat("Run .Rprofile by executing\n\trun_r_profile()\n")
 
-options(languageserver.server_capabilities = list(
-	signatureHelpProvider = list(triggerCharacters = list("(", ",", "$"))),
-	completionProvider = list(resolveProvider = TRUE, triggerCharacters = list(".", ":", "$"))
-)
+# Disable completion from the language server
+options(languageserver.server_capabilities = list(completionProvider = FALSE, 
+                                                  completionItemResolve = FALSE))
 
 run_r_profile <- function() {
 	# set up repos

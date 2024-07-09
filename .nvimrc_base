@@ -32,8 +32,3 @@ inoremap <c-left> <esc><c-w>h<esc>i
 inoremap <c-right> <esc><c-w>l<esc>i
 inoremap <c-up> <esc><c-w>k<esc>i
 inoremap <c-down> <esc><c-w>j<esc>i
-tmap <c-left> <esc><c-w>h<esc>i
-tmap <c-right> <esc><c-w>l<esc>i
-tmap <c-up> <esc><c-w>k<esc>i
-tmap <c-down> <esc><c-w>j<esc>i
-

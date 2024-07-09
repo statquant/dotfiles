@@ -5,7 +5,7 @@ call plug#begin('~/.vim/plugged')
 " The basics: https://github.com/tpope/vim-sensible
 Plug 'tpope/vim-sensible'
 " Nvim-R: https://github.com/jalvesaq/Nvim-R
-Plug 'jalvesaq/Nvim-R', {'branch': 'stable', 'for': ['r', 'R', 'rmd', 'Rmd']} 
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable', 'for': ['r', 'R', 'rmd', 'Rmd', 'qmd']} 
 " asyncomplete.vim: https://github.com/prabirshrestha/asyncomplete.vim
 Plug 'prabirshrestha/asyncomplete.vim', { 'for': ['r', 'rmd', 'rnoweb']}
 " asyncomplete-omni.vim: https://github.com/yami-beta/asyncomplete-omni.vim
@@ -37,22 +37,22 @@ call plug#end()
 
 " configuration needs to be after plug#end because rtp is not set within
 " #begin/#end
-source ~/dotfiles/.vimrc_base
-source ~/dotfiles/.vimrc_nvimr
-source ~/dotfiles/.vimrc_omni
-source ~/dotfiles/.vimrc_devtools
-source ~/dotfiles/.nvimrc_vimcmdline
-source ~/dotfiles/.vimrc_airline
-source ~/dotfiles/.vimrc_nerd
-source ~/dotfiles/.vimrc_ctrlp
-source ~/dotfiles/.vimrc_colorscheme
+source ${HOME}/.dotfiles/.vimrc_base
+source ${HOME}/.dotfiles/.vimrc_nvimr
+source ${HOME}/.dotfiles/.vimrc_omni
+source ${HOME}/.dotfiles/.vimrc_devtools
+source ${HOME}/.dotfiles/.nvimrc_vimcmdline
+source ${HOME}/.dotfiles/.vimrc_airline
+source ${HOME}/.dotfiles/.vimrc_nerd
+source ${HOME}/.dotfiles/.vimrc_ctrlp
+source ${HOME}/.dotfiles/.vimrc_colorscheme
 
 "2021-01-23 removing coc-r until I find how to trigger completion on ,<space>
 if 0
 	" Conquer of completion: https://github.com/neoclide/coc.nvim
 	" Install coc-r-lsp: https://github.com/neoclide/coc-r-lsp
 	Plug 'neoclide/coc.nvim', {'branch': 'release', 
-				\ 'for': ['vim', 'r', 'R', 'rmd', 'Rmd'], 
+				\ 'for': ['vim', 'r', 'R', 'rmd', 'Rmd', 'qmd'], 
 				\ 'do': ':CocInstall coc-r-lsp coc-snippets'}
 	source ~/dotfiles/.vimrc_coc
 endif
