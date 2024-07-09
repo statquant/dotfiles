@@ -1,0 +1,79 @@
+" Specify a directory for plugins
+" At the time of writing vim-plug must be install doing 
+" bash) curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" You cannot use ${XDG_CONFIG_HOME} in place of ~/.config
+call plug#begin("~/.config/nvim/plugged")
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+" For vsnip users.
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+" Nvim-R: https://github.com/jalvesaq/Nvim-R
+Plug 'jalvesaq/Nvim-R', {'branch': 'stable', 'for': ['r', 'R', 'rmd', 'Rmd', 'qmd', 'rmarkdown']} 
+Plug 'jalvesaq/cmp-nvim-r'
+Plug 'onsails/lspkind.nvim'
+" Patched fonts for Powerline: https://github.com/powerline/fonts
+" Plug 'powerline/fonts', {'do': './install.sh'}
+" Lean & mean status/tabline for vim: https://github.com/vim-airline/vim-airline
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Colorscheme pack: https://github.com/flazz/vim-colorschemes
+" Plug 'flazz/vim-colorschemes'
+" Done for all plugins
+call plug#end()
+
+" configuration needs to be after plug#end because rtp is not set within begin/#end
+"source ${HOME}/.dotfiles/.nvimrc_base
+source ${HOME}/.dotfiles/.nvimrc_nvimr
+"source ${HOME}/.dotfiles/.nvimrc_coc
+"source ${HOME}/.dotfiles/.nvimrc_devtools
+"source ${HOME}/.dotfiles/.nvimrc_vimcmdline
+"source ${HOME}/.dotfiles/.nvimrc_airline
+"source ${HOME}/.dotfiles/.nvimrc_colorscheme
+"source ${HOME}/.dotfiles/.nvimrc_jupytext.vim
+" unused plugin configurations 
+"source ~/.dotfiles/.nvimrc_nerd
+"source ~/.dotfiles/.nvimrc_ctrlp
+
+
+lua <<EOF
+  -- Set up nvim-cmp.
+  local cmp = require('cmp')
+  local lspkind = require('lspkind')
+
+  cmp.setup({
+    formatting = {
+        fields = {'abbr', 'kind', 'menu'},
+        format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters
+            ellipsis_char = '...', -- the truncated part when popup menu exceed maxwidth
+            before = function(entry, item)
+                local menu_icon = {
+                    nvim_lsp = '',
+                    vsnip = '',
+                    path = '',
+                    cmp_nvim_r = 'R'
+                }
+                item.menu = menu_icon[entry.source.name]
+                return item
+            end,
+        })
+    },
+    sources = cmp.config.sources({
+        { name = 'vsnip' },
+        { name = 'cmp_nvim_r' },
+        { name = 'nvim_lsp' },
+        { name = 'path', option = { trailing_slash = true } },
+    }),
+})
+require'cmp_nvim_r'.setup({
+	  filetypes = {'r', 'rmd', 'quarto'},
+	  doc_width = 58
+})
+EOF
+
